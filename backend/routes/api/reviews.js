@@ -4,8 +4,9 @@ const { Op } = require("sequelize");
 const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models');
 
 //test router setup
-router.post('/test', function (req, res) {
-    res.json({ requestBody: req.body });
+router.get('/test', function (req, res) {
+    res.send('endpoint hit');
 });
+
 
 module.exports = router;
