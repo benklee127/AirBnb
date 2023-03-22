@@ -25,11 +25,35 @@ module.exports = {
         city: 'Plainsboro',
         state: 'NJ',
         country: 'USA',
-        lat: 50.0,
-        lng: 60.0,
+        lat: 50.01,
+        lng: 60.01,
         name: 'Treehouse',
         description: 'Fancy Treehouse',
-        price: 10.00
+        price: 10.01
+      },
+      {
+        ownerId: 1,
+        address: '124 Oak Street',
+        city: 'Plainsboro',
+        state: 'NJ',
+        country: 'USA',
+        lat: 50.02,
+        lng: 60.02,
+        name: 'Treehouse2',
+        description: 'Fancier Treehouse',
+        price: 20.01
+      },
+      {
+        ownerId: 1,
+        address: '124 Oak Street',
+        city: 'Plainsboro',
+        state: 'NJ',
+        country: 'USA',
+        lat: 50.02,
+        lng: 60.02,
+        name: 'Treehouse2',
+        description: 'Fancier Treehouse',
+        price: 20.01
       },
     ], {});
   },
