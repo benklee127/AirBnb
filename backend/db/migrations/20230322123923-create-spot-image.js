@@ -16,21 +16,30 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       spotId: {
+        allowNull: false,
+        references: {
+          model: "Spots"
+        },
+        onDelete: 'CASCADE',
         type: Sequelize.INTEGER
       },
       url: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       preview: {
+        allowNull: false,
         type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
   },
