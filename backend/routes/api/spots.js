@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
     const spotList = [];
 
     spots.forEach(spot => {
-        spotList.push(spot.json());
+        spotList.push(spot.toJSON());
     });
 
     spotList.forEach(spot => {
