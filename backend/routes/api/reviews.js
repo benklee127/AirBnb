@@ -7,6 +7,16 @@ const { requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
+const validateReview = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .isInt({ min: 1, max: 5 })
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
 
 //get all reviews of user
 
@@ -37,11 +47,58 @@ router.get('/current', requireAuth, async (req, res) => {
         reviewList.push(review.toJSON())
     });
 
-
     res.json({ Reviews: reviewList });
 
+});
 
+//add review image
+router.post('/:reviewId/images', requireAuth, async (req, res) => {
+    const reviewId = req.params.reviewId;
+    const url = req.body.url;
+    const review = await Review.findByPk(reviewId, {
+        include: [{ model: ReviewImage }]
+    });
+
+    if (!review) {
+        return res.status(404).json({
+            message: "Review couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    const img = await ReviewImage.create({ reviewId, url });
+    const imgJSON = img.toJSON();
+
+    res.json(imgJSON);
+
+});
+
+//edit a review
+router.put('/reviewId', requireAuth, validateReview, async (req, res, next) => {
+    const { review, stars } = req.body;
+    const userId = req.user.id;
+    const reviewId = req.params.reviewId;
+
+    const edit = await Review.findByPk(reviewId);
+    if (!edit) {
+        return res.status(404).json({
+            message: "Review couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    const reviewJSON = edit.toJSON();
+    if (reviewJSON.userId !== userId) {
+        res.status(403).json({ message: "Review must belong to the current user" });
+    }
+
+    edit.review = review;
+    edit.stars = stars;
+    await edit.save();
+
+    res.json(edit);
 })
+
 
 //test router setup
 router.get('/test', function (req, res) {

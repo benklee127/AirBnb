@@ -21,8 +21,18 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: 'spotimage.com',
+        url: 'spotimage1.com',
         preview: true
+      },
+      {
+        spotId: 1,
+        url: 'spotimage2.com',
+        preview: true
+      },
+      {
+        spotId: 2,
+        url: 'spotimage3.com',
+        preview: false
       },
     ], {});
   },

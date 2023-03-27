@@ -17,12 +17,25 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    options.tableName = 'SpotImages';
+    options.tableName = 'Bookings';
     return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: 'spotimage.com',
-        preview: true
+        userId: 1,
+        startDate: '2023-04-01',
+        endDate: '2023-04-02'
+      },
+      {
+        spotId: 2,
+        userId: 2,
+        startDate: '2023-04-01',
+        endDate: '2023-04-02'
+      },
+      {
+        spotId: 3,
+        userId: 3,
+        startDate: '2023-04-01',
+        endDate: '2023-04-02'
       },
     ], {});
   },
@@ -34,10 +47,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    options.tableName = 'SpotImages';
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      url: { [Op.in]: ['spotimage.com'] }
-    }, {});
+    options.tableName = 'Bookings';
+    return queryInterface.bulkDelete(options);
   }
 };

@@ -8,55 +8,22 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Spots', {
+    await queryInterface.createTable('ReviewImages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      ownerId: {
+      reviewId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
-        references: {
-          model: "Users"
-        },
+        references: { model: 'Reviews' },
         onDelete: 'CASCADE',
       },
-      address: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      city: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      state: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      country: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      lat: {
-        type: Sequelize.DECIMAL,
-        allowNull: false,
-      },
-      lng: {
-        type: Sequelize.DECIMAL,
-        allowNull: false,
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      description: {
+      url: {
         allowNull: false,
         type: Sequelize.STRING
-      },
-      price: {
-        allowNull: false,
-        type: Sequelize.DECIMAL
       },
       createdAt: {
         allowNull: false,
@@ -71,7 +38,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Spots"
-    await queryInterface.dropTable('Spots');
+    options.tableName = "ReviewImages"
+    await queryInterface.dropTable('ReviewImages');
   }
 };

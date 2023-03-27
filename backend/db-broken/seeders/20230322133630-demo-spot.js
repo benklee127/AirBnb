@@ -45,14 +45,14 @@ module.exports = {
       },
       {
         ownerId: 1,
-        address: '124 Oak Street',
+        address: '125 Oak Street',
         city: 'Plainsboro',
         state: 'NJ',
         country: 'USA',
         lat: 50.02,
         lng: 60.02,
         name: 'Treehouse2',
-        description: 'Fancier Treehouse',
+        description: 'Fanciest Treehouse',
         price: 20.01
       },
     ], {});

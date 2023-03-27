@@ -17,13 +17,20 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    options.tableName = 'SpotImages';
+    options.tableName = 'ReviewImages';
     return queryInterface.bulkInsert(options, [
       {
-        spotId: 1,
-        url: 'spotimage.com',
-        preview: true
+        reviewId: 1,
+        url: 'website1.com'
       },
+      {
+        reviewId: 1,
+        url: 'website2.com'
+      },
+      {
+        reviewId: 2,
+        url: 'website3.com'
+      }
     ], {});
   },
 
@@ -34,10 +41,10 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    options.tableName = 'SpotImages';
+    options.tableName = 'ReviewImages';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      url: { [Op.in]: ['spotimage.com'] }
+      url: { [Op.in]: ['website.com'] }
     }, {});
   }
 };
