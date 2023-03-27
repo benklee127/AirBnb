@@ -25,6 +25,19 @@ module.exports = {
         review: 'in an oak tree',
         stars: 5
       },
+      {
+        spotId: 1,
+        userId: 2,
+        review: 'very nature, very cool, would be better if it had a bathroom though',
+        stars: 4
+      },
+      {
+        spotId: 1,
+        userId: 3,
+        review: 'Hi, ive been trying to reach you about your car\'s extended warranty',
+        stars: 5
+      },
+      
     ], {});
   },
 

@@ -44,7 +44,7 @@ module.exports = {
         price: 20.01
       },
       {
-        ownerId: 1,
+        ownerId: 2,
         address: '124 Oak Street',
         city: 'Plainsboro',
         state: 'NJ',
