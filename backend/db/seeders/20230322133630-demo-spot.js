@@ -45,15 +45,15 @@ module.exports = {
       },
       {
         ownerId: 2,
-        address: '124 Oak Street',
+        address: '125 Oak Street',
         city: 'Plainsboro',
         state: 'NJ',
         country: 'USA',
-        lat: 50.02,
-        lng: 60.02,
-        name: 'Treehouse2',
-        description: 'Fancier Treehouse',
-        price: 20.01
+        lat: 50.03,
+        lng: 60.03,
+        name: 'Treehouse3',
+        description: 'Fanciest Treehouse',
+        price: 20.02
       },
     ], {});
   },
@@ -66,9 +66,6 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     options.tableName = 'Spots';
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['Treehouse'] }
-    }, {});
+    return queryInterface.bulkDelete(options);
   }
 };

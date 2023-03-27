@@ -21,7 +21,15 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         reviewId: 1,
-        url: 'website.com'
+        url: 'website1.com'
+      },
+      {
+        reviewId: 1,
+        url: 'website2.com'
+      },
+      {
+        reviewId: 2,
+        url: 'website3.com'
       }
     ], {});
   },
