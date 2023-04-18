@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { Op } = require("sequelize");
 const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models');
+const { requireAuth } = require('../../utils/auth');
 
 router.delete('/:imageId', requireAuth, async (req, res) => {
     const imageId = req.params.imageId;
