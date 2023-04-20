@@ -21,8 +21,16 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         reviewId: 1,
-        url: 'website.com'
-      }
+        url: 'review1.com'
+      },
+      {
+        reviewId: 2,
+        url: 'review2.com'
+      },
+      {
+        reviewId: 3,
+        url: 'review3.com'
+      },
     ], {});
   },
 
@@ -34,9 +42,6 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     options.tableName = 'ReviewImages';
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      url: { [Op.in]: ['website.com'] }
-    }, {});
+    return queryInterface.bulkDelete(options);
   }
 };

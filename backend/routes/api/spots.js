@@ -95,9 +95,8 @@ router.get('/current', requireAuth, async (req, res) => {
         spotsList.push(spot.toJSON());
     });
 
-    // image stuff
     // spotsList.forEach(spot => {
-    //
+
     // })
 
     //calc avg rating given
