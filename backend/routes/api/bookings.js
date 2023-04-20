@@ -28,11 +28,11 @@ router.get('/current', requireAuth, async (req, res) => {
 
 //edit booking
 router.put('/:bookingId', requireAuth, async (req, res) => {
-    const userId = req.user.id;
+//    const userId = req.user.id;
     const bookingId = req.params.bookingId;
     const { startDate, endDate } = req.body;
 
-    const editBooking = await Booking.findByPk(bookingId);
+    const booking = await Booking.findByPk(bookingId);
     if (!booking) {
         res.status(404).json({
             "message": "Booking couldn't be found",
@@ -70,7 +70,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 
 //delete booking
 router.delete('/:bookingId', requireAuth, async (req, res) => {
-    const userId = req.user.id;
+//    const userId = req.user.id;
     const bookingId = req.params.bookingId;
     const booking = await Booking.findByPk(bookingId, {
         include: { model: Spot }

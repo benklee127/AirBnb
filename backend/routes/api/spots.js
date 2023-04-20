@@ -179,11 +179,9 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
         res.status(404).json({ "message": "Spot couldn't be found" });
     }
 
-    const spotJSON = spot.toJSON();
-
     const img = await SpotImage.create({ spotId, url, preview });
-    const imgJSON = image.toJSON();
-    res.json(pic);
+    const imgJSON = img.toJSON();
+    res.json(imgJSON);
 
 });
 
