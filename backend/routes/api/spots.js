@@ -50,11 +50,10 @@ const validateSpot = [
 router.get('/', async (req, res) => {
     //query validation
     let { size, page, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
-    page = parseInt(page);
-    size = parseInt(size);
 
+    console.log(size, page);
     if (page < 1) {
-        res.status(400).json({
+        return res.status(400).json({
             "message": "Validation Error",
             "statusCode": 400,
             "errors": {
@@ -63,7 +62,7 @@ router.get('/', async (req, res) => {
         });
     }
     if (size < 1) {
-        res.status(400).json({
+        return res.status(400).json({
             "message": "Validation Error",
             "statusCode": 400,
             "errors": {
@@ -71,8 +70,8 @@ router.get('/', async (req, res) => {
             }
         });
     }
-    if (isNaN(Number(maxLat))) {
-        res.status(400).json({
+    if (Number.isNaN(maxLat)) {
+        return res.status(400).json({
             "message": "Validation Error",
             "statusCode": 400,
             "errors": {
@@ -80,8 +79,8 @@ router.get('/', async (req, res) => {
             }
         });
     }
-    if (isNaN(Number(minLat))) {
-        res.status(400).json({
+    if (Number.isNaN(minLat)) {
+        return res.status(400).json({
             "message": "Validation Error",
             "statusCode": 400,
             "errors": {
@@ -89,8 +88,8 @@ router.get('/', async (req, res) => {
             }
         });
     }
-    if (isNaN(Number(maxLng))) {
-        res.status(400).json({
+    if (Number.isNaN(maxLng)) {
+        return res.status(400).json({
             "message": "Validation Error",
             "statusCode": 400,
             "errors": {
@@ -98,8 +97,8 @@ router.get('/', async (req, res) => {
             }
         });
     }
-    if (isNaN(Number(minLng))) {
-        res.status(400).json({
+    if (Number.isNaN(minLng)) {
+        return res.status(400).json({
             "message": "Validation Error",
             "statusCode": 400,
             "errors": {
@@ -109,7 +108,7 @@ router.get('/', async (req, res) => {
     }
 
     if (minPrice < 0) {
-        res.status(400).json({
+        return res.status(400).json({
             "message": "Validation Error",
             "statusCode": 400,
             "errors": {
@@ -119,7 +118,7 @@ router.get('/', async (req, res) => {
     }
 
     if (maxPrice < 0) {
-        res.status(400).json({
+        return res.status(400).json({
             "message": "Validation Error",
             "statusCode": 400,
             "errors": {
@@ -129,19 +128,33 @@ router.get('/', async (req, res) => {
     }
 
     //query filter & pagination
+    page = parseInt(page);
+    size = parseInt(size);
 
-    if (isNaN(page)) page = 0;
-    if (isNaN(size)) size = 20;
+    if (isNaN(page) || page < 1) page = 1;
+    if (isNaN(size) || size < 1 || size > 20) size = 20;
+    if (page > 10) page = 10;
 
-
-
-
+    let pagination = {};
     let where = {}
+
+    pagination.limit = size;
+    pagination.offset = size * (page - 1);
+
+    if (minLat) where.lat = { [Op.gte]: minLat };
+    if (maxLat) where.lat = { [Op.lte]: maxLat };
+    if (minLng) where.lng = { [Op.gte]: minLng };
+    if (maxLng) where.lng = { [Op.lte]: maxLng };
+    if (minPrice) where.price = { [Op.gte]: minPrice };
+    if (maxPrice) where.price = { [Op.lte]: maxPrice };
+
+
     const spots = await Spot.findAll({
         where,
+        ...pagination,
         include: [
             { model: SpotImage },
-            { model: Review }
+            { model: Review },
         ],
     });
     const spotList = [];
