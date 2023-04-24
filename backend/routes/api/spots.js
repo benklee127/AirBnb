@@ -163,19 +163,28 @@ router.get('/', async (req, res) => {
         spotList.push(spot.toJSON());
     });
 
-    //avg rating for spot
     spotList.forEach(spot => {
-        //need to add img url
+        if (!spot.SpotImages.length) spot.previewImage = 'No preview image found';
+        else {
+            spot.previewImage = spot.SpotImages[0].url;
+            spot.preview = true;
+        }
 
+        delete spot.SpotImages;
+    })
+
+    //calc avg rating given
+    spotList.forEach(spot => {
         let count = 0;
         let sum = 0;
         spot.Reviews.forEach(review => {
             count++;
             sum += review.stars;
-        });
+        })
 
         spot.avgRating = sum / count;
 
+        delete spot.Reviews;
     })
     res.json(spotList)
 });
@@ -192,17 +201,24 @@ router.get('/current', requireAuth, async (req, res) => {
         ]
     });
 
-    let spotsList = [];
+    let spotList = [];
     spots.forEach(spot => {
-        spotsList.push(spot.toJSON());
+        spotList.push(spot.toJSON());
     });
 
-    // spotsList.forEach(spot => {
 
-    // })
+    spotList.forEach(spot => {
+        if (!spot.SpotImages.length) spot.previewImage = 'No preview image found';
+        else {
+            spot.previewImage = spot.SpotImages[0].url;
+            spot.preview = true;
+        }
+
+        delete spot.SpotImages;
+    })
 
     //calc avg rating given
-    spotsList.forEach(spot => {
+    spotList.forEach(spot => {
         let count = 0;
         let sum = 0;
         spot.Reviews.forEach(review => {
@@ -212,8 +228,9 @@ router.get('/current', requireAuth, async (req, res) => {
 
         spot.avgRating = sum / count;
 
+        delete spot.Reviews;
     })
-    res.json({ Spots: spotsList })
+    res.json({ Spots: spotList })
 
 });
 
