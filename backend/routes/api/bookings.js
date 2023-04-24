@@ -38,7 +38,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
 //edit booking
 router.put('/:bookingId', requireAuth, async (req, res) => {
-    //    const userId = req.user.id;
+    const userId = req.user.id;
     const bookingId = req.params.bookingId;
     const { startDate, endDate } = req.body;
 
@@ -47,6 +47,14 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         res.status(404).json({
             "message": "Booking couldn't be found",
             "statusCode": 404
+        })
+    }
+
+    const bookingJson = booking.toJSON();
+    if (bookingJson.userId !== userId) {
+        res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403,
         })
     }
 
@@ -65,8 +73,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         })
     }
 
-
-    if (now >= start) {
+    if (now >= start || now >= end) {
         res.status(403).json({
             "message": "Past bookings can't be modified",
             "statusCode": 403
@@ -76,6 +83,9 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     booking.startDate = startDate;
     booking.endDate = endDate;
 
+    await booking.save();
+
+    return res.status(200).json(booking);
 });
 
 //delete booking
