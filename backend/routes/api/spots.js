@@ -267,6 +267,8 @@ router.get('/:spotid', async (req, res) => {
     })
     spotJSON.avgStarRating = sum / count;
 
+    delete spotJSON.Reviews;
+
     res.json(spotJSON);
 
 });
@@ -289,7 +291,7 @@ router.post('/', requireAuth, validateSpot, async (req, res) => {
 });
 
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
-    const spotId = req.params;
+    const spotId = req.params.spotId;
     const { url, preview } = req.body;
 
     const spot = await Spot.findByPk(spotId);
