@@ -45,8 +45,97 @@ const validateSpot = [
     handleValidationErrors
 ];
 
+
 //get all spots
 router.get('/', async (req, res) => {
+    //query validation
+    let { size, page, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+    page = parseInt(page);
+    size = parseInt(size);
+
+    if (page < 1) {
+        res.status(400).json({
+            "message": "Validation Error",
+            "statusCode": 400,
+            "errors": {
+                "page": "Page must be greater than or equal to 1"
+            }
+        });
+    }
+    if (size < 1) {
+        res.status(400).json({
+            "message": "Validation Error",
+            "statusCode": 400,
+            "errors": {
+                "page": "Size must be greater than or equal to 1"
+            }
+        });
+    }
+    if (isNaN(Number(maxLat))) {
+        res.status(400).json({
+            "message": "Validation Error",
+            "statusCode": 400,
+            "errors": {
+                "page": "Maximum latitude is invalid"
+            }
+        });
+    }
+    if (isNaN(Number(minLat))) {
+        res.status(400).json({
+            "message": "Validation Error",
+            "statusCode": 400,
+            "errors": {
+                "page": "Minimum latitude is invalid"
+            }
+        });
+    }
+    if (isNaN(Number(maxLng))) {
+        res.status(400).json({
+            "message": "Validation Error",
+            "statusCode": 400,
+            "errors": {
+                "page": "Maximum longitude is invalid"
+            }
+        });
+    }
+    if (isNaN(Number(minLng))) {
+        res.status(400).json({
+            "message": "Validation Error",
+            "statusCode": 400,
+            "errors": {
+                "page": "Minimum longitude is invalid"
+            }
+        });
+    }
+
+    if (minPrice < 0) {
+        res.status(400).json({
+            "message": "Validation Error",
+            "statusCode": 400,
+            "errors": {
+                "page": "Minimum price must be greater than or equal to 0"
+            }
+        });
+    }
+
+    if (maxPrice < 0) {
+        res.status(400).json({
+            "message": "Validation Error",
+            "statusCode": 400,
+            "errors": {
+                "page": "Maximum price must be greater than or equal to 0"
+            }
+        });
+    }
+
+    //query filter & pagination
+
+    if (isNaN(page)) page = 0;
+    if (isNaN(size)) size = 20;
+
+
+
+
     let where = {}
     const spots = await Spot.findAll({
         where,
