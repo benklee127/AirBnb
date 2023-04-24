@@ -273,6 +273,59 @@ router.get('/:spotid', async (req, res) => {
 
 });
 
+router.post('/:spotId/reviews', async (req, res) => {
+    const { review, stars } = req.body;
+    const userId = req.user.id;
+    const spotId = req.params.spotId;
+
+    const spot = await Spot.findByPk(spotId);
+
+    if (!spot) {
+        return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+
+    const existing = await Review.findAll({ where: { userId: userId, spotId: spotId } });
+
+    if (existing.length) {
+        return res.status(403).json({ message: "User already has a review for this spot" });
+    }
+
+    const newReview = await Review.create({
+        userId,
+        spotId,
+        review,
+        stars
+    })
+
+    return res.status(201).json(newReview);
+
+});
+
+router.get('/:spotId/reviews', async (req, res) => {
+
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (!spot) return res.status(404).json({ message: "Spot couldn't be found" });
+
+    const reviews = await Review.findAll({
+        where: { spotId: req.params.spotId },
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+                model: ReviewImage,
+                attributes: ['id', 'url']
+            }
+        ]
+    })
+
+    return res.status(200).json({ Reviews: reviews })
+});
+
+
+
 router.post('/', requireAuth, validateSpot, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body
     const spot = await Spot.create({
@@ -312,7 +365,17 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId);
 
     if (!spot) {
-        res.status(404).json({ message: "Spot couldn't be found" });
+        return res.status(404).json({
+            message: "Spot couldn't be found",
+            statusCode: "404"
+        });
+    }
+
+    if (spot.ownerId !== req.user.id) {
+        return res.status(403).json({
+            message: "Forbidden",
+            statusCode: "403"
+        })
     }
 
     spot.address = address;
@@ -327,7 +390,7 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
 
     await spot.save();
 
-    res.json(spotJSON);
+    return res.status(200).json(spot);
 });
 
 //delete spot

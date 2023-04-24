@@ -32,6 +32,7 @@ router.get('/current', requireAuth, async (req, res) => {
             },
             {
                 model: Spot,
+                include: { model: SpotImage },
                 attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price']
             },
             {
@@ -47,9 +48,20 @@ router.get('/current', requireAuth, async (req, res) => {
         reviewList.push(review.toJSON())
     });
 
-    res.json({ Reviews: reviewList });
+    reviewList.forEach(review => {
+        if (!review.Spot.SpotImages.length) review.spot.previewImage = 'No preview image found';
+        else {
+            review.Spot.previewImage = review.Spot.SpotImages[0].url;
+        }
+
+        delete review.Spot.SpotImages;
+    })
+
+    return res.json({ Reviews: reviewList });
 
 });
+
+
 
 //add review image
 router.post('/:reviewId/images', requireAuth, async (req, res) => {
