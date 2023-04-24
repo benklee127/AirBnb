@@ -361,6 +361,82 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
 
     return res.status(200).json(spotJson);
 
+});
+
+router.post('/:spotId/bookings', requireAuth, async (req, res) => {
+    const userId = req.user.id;
+    const spotId = req.params.spotId;
+    const { startDate, endDate } = req.body;
+
+    const spot = await Spot.findByPk(spotId, {
+        include: [{ model: Booking }]
+    });
+
+    if (!spot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    const spotJson = spot.toJSON();
+    if (spotJson.ownerId === userId) {
+        return res.status(403).json({
+            message: "Spot belongs to you",
+            statusCode: 403
+        })
+    }
+
+    const start = new Date(startDate).getTime();
+    const end = new Date(endDate).getTime();
+    const now = new Date().getTime();
+
+
+    if (start >= end) {
+        res.status(403).json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": [
+                "endDate cannot come before startDate"
+            ]
+        })
+    }
+
+    if (now >= start || now >= end) {
+        res.status(403).json({
+            "message": "Past bookings can't be modified",
+            "statusCode": 403
+        })
+    }
+
+    spotJson.Bookings.forEach(booking => {
+        const existingStart = booking.startDate.getTime();
+        const existingEnd = booking.endDate.getTime();
+
+        if (start >= existingStart && start <= existingEnd) {
+            res.status(403).json({
+                "message": "Sorry, this spot is already booked for the specified dates",
+                "errors": { "startDate": "Start date conflicts with an existing booking" },
+                "statusCode": 403
+            })
+        }
+        if (end >= existingStart && end <= existingEnd) {
+            res.status(403).json({
+                "message": "Sorry, this spot is already booked for the specified dates",
+                "errors": { "endDate": "End date conflicts with an existing booking" },
+                "statusCode": 403
+            })
+        }
+    });
+
+    const booking = await Booking.create({
+        spotId,
+        userId,
+        startDate,
+        endDate,
+    })
+
+    return res.status(200).json(booking);
 })
 
 
@@ -444,7 +520,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     }
 
     await spot.destroy();
-    res.status(200).json({
+    return res.status(200).json({
         "message": "Successfully deleted",
         "statusCode": 200
     });

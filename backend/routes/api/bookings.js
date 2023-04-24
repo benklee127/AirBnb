@@ -80,6 +80,32 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         })
     }
 
+    const spot = await Spot.findByPk(bookingJson.spotId, {
+        include: [
+            { model: Booking }
+        ]
+    })
+    const spotJson = spot.toJSON();
+    spotJson.Bookings.forEach(booking => {
+        const existingStart = booking.startDate.getTime();
+        const existingEnd = booking.endDate.getTime();
+
+        if (start >= existingStart && start <= existingEnd) {
+            res.status(403).json({
+                "message": "Sorry, this spot is already booked for the specified dates",
+                "errors": { "startDate": "Start date conflicts with an existing booking" },
+                "statusCode": 403
+            })
+        }
+        if (end >= existingStart && end <= existingEnd) {
+            res.status(403).json({
+                "message": "Sorry, this spot is already booked for the specified dates",
+                "errors": { "endDate": "End date conflicts with an existing booking" },
+                "statusCode": 403
+            })
+        }
+    })
+
     booking.startDate = startDate;
     booking.endDate = endDate;
 
