@@ -78,6 +78,20 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
         })
     }
 
+    if (req.user.id !== review.userId) {
+        return res.status(403).json({
+            message: "Forbidden",
+            statusCode: 403
+        })
+    }
+
+    if (review.ReviewImages.length >= 10) {
+        return res.status(403).json({
+            message: "Maximum number of images for this resource was reached",
+            statusCode: 403
+        })
+    }
+
     const img = await ReviewImage.create({ reviewId, url });
     const imgJSON = img.toJSON();
 
@@ -86,7 +100,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
 });
 
 //edit a review
-router.put('/reviewId', requireAuth, validateReview, async (req, res, next) => {
+router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => {
     const { review, stars } = req.body;
     const userId = req.user.id;
     const reviewId = req.params.reviewId;
@@ -101,14 +115,17 @@ router.put('/reviewId', requireAuth, validateReview, async (req, res, next) => {
 
     const reviewJSON = edit.toJSON();
     if (reviewJSON.userId !== userId) {
-        res.status(403).json({ message: "Review must belong to the current user" });
+        return res.status(403).json({
+            message: "Forbidden",
+            statusCode: 403
+        })
     }
 
     edit.review = review;
     edit.stars = stars;
     await edit.save();
 
-    res.json(edit);
+    return res.status(200).json(edit);
 })
 
 //delete review

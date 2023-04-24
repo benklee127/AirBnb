@@ -13,6 +13,7 @@ router.get('/current', requireAuth, async (req, res) => {
         },
         include: {
             model: Spot,
+            include: { model: SpotImage },
             attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price']
         },
     });
@@ -22,13 +23,22 @@ router.get('/current', requireAuth, async (req, res) => {
         bookingList.push(booking.toJSON());
     });
 
+    bookingList.forEach(booking => {
+        if (!booking.Spot.SpotImages.length) booking.Spot.previewImage = 'No preview image found';
+        else {
+            booking.Spot.previewImage = booking.Spot.SpotImages[0].url;
+        }
+
+        delete booking.Spot.SpotImages;
+    })
+
     res.json({ Bookings: bookingList });
 });
 
 
 //edit booking
 router.put('/:bookingId', requireAuth, async (req, res) => {
-//    const userId = req.user.id;
+    //    const userId = req.user.id;
     const bookingId = req.params.bookingId;
     const { startDate, endDate } = req.body;
 
@@ -70,7 +80,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 
 //delete booking
 router.delete('/:bookingId', requireAuth, async (req, res) => {
-//    const userId = req.user.id;
+    //    const userId = req.user.id;
     const bookingId = req.params.bookingId;
     const booking = await Booking.findByPk(bookingId, {
         include: { model: Spot }
