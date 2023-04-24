@@ -141,6 +141,13 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
         })
     }
 
+    if (review.userId != userId) {
+        return res.status(403).json({
+            "message": "review must belong to you",
+            "statusCode": 403
+        })
+    }
+
     await review.destroy();
     res.json({
         "message": "Successfully deleted",
