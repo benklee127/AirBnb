@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+`<insert database schema designhere>`
 
 ## API Documentation
 
