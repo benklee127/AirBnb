@@ -1,15 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
-
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
 
     let sessionLinks;
-
     if (sessionUser) {
         sessionLinks = (
             <li>
@@ -23,7 +21,7 @@ function Navigation({ isLoaded }) {
                 <NavLink to="/signup">Sign Up</NavLink>
             </li>
         );
-    };
+    }
 
     return (
         <ul>
@@ -32,7 +30,7 @@ function Navigation({ isLoaded }) {
             </li>
             {isLoaded && sessionLinks}
         </ul>
-    )
-};
+    );
+}
 
-export default Navigation
+export default Navigation;
