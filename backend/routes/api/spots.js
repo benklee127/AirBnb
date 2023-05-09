@@ -51,7 +51,7 @@ router.get('/', async (req, res) => {
     //query validation
     let { size, page, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
 
-    console.log(size, page);
+    // console.log(size, page);
     if (page < 1) {
         return res.status(400).json({
             "message": "Validation Error",

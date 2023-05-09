@@ -49,7 +49,7 @@ router.post(
             username: user.username,
         };
 
-        console.log(firstName);
+        // console.log(firstName);
 
         await setTokenCookie(res, safeUser);
 
