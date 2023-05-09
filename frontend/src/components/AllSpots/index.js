@@ -7,8 +7,8 @@ import AllSpotsItem from "../AllSpotsItem";
 
 
 function AllSpots() {
-    const allSpots = useSelector(state => state.spots.allSpots);
-
+    const allSpots = Object.values(useSelector(state => state.spots.allSpots));
+    console.log(allSpots);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getAllSpotsThunk())
