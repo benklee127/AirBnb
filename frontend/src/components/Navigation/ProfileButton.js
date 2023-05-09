@@ -8,9 +8,7 @@ function ProfileButton({ user }) {
     const ulRef = useRef();
 
     const openMenu = () => {
-        console.log('here');
         if (showMenu) return;
-        console.log('here2');
         setShowMenu(true);
     };
 
