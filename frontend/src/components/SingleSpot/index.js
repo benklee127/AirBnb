@@ -15,7 +15,20 @@ function SingleSpot() {
         dispatch(getSpotThunk(spotId))
     }, [dispatch]);
 
-    console.log("spotimages", spot.SpotImages);
+    let spotImageUrls = [];
+
+    // console.log(spot.SpotImage.length);
+    // for (let i = 0; i < spot.SpotImages.length; i++) {
+    //     spotImageUrls.push(spot.SpotImages[i].url);
+    // }
+
+    for (let e in spot.SpotImages) {
+        spotImageUrls.push(spot.SpotImages[e].url)
+    }
+    console.log('array: spoturlimg:', spotImageUrls);
+    // console.log(spotImageUrls[0].url);
+    // // spot.SpotImages.forEach(e => spotImageUrls.push(e[].url));
+    // console.log("spotimages", spot.SpotImages.length);
     return (
         <section>
             <h1>hi from single spot page</h1>
@@ -25,8 +38,8 @@ function SingleSpot() {
             <h2>{spot.price}</h2>
             <h2>images</h2>
             <ul>
-                {spot.SpotImages.map((imgobj) => (
-                    <li>{imgobj.url}</li>
+                {spotImageUrls.map(url => (
+                    <li>{url}</li>
                 ))}
             </ul>
             <h2>reviews</h2>
