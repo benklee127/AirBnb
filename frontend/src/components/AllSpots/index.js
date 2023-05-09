@@ -8,7 +8,8 @@ import AllSpotsItem from "../AllSpotsItem";
 
 function AllSpots() {
     const allSpots = Object.values(useSelector(state => state.spots.allSpots));
-    console.log(allSpots);
+    // console.log(allSpots);
+
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getAllSpotsThunk())
@@ -19,6 +20,7 @@ function AllSpots() {
             {allSpots.map((spot) => (
                 <AllSpotsItem spot={spot} />
             ))}
+
         </section>
     )
 }
