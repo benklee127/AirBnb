@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 
 const GET_ALLSPOTS = "spots/getAllSpots";
 const GET_SPOT = "spots/getSpot";
+const CREATE_SPOT = "createSpot";
 
 //action creator for AllSpots
 const getAllSpotsAC = (spots) => {
@@ -18,6 +19,29 @@ const getSpotAC = (spot) => {
         type: GET_SPOT,
         payload: spot,
     }
+}
+
+const createSpotAC = (spot) => {
+    return {
+        type: CREATE_SPOT,
+        payload: spot
+    }
+}
+
+export const createSpotThunk = (createSpotInfo) => async (dispatch) => {
+    const { newSpotInfo, newSpotImages } = createSpotInfo;
+    const res = await csrfFetch('/api/spots', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newSpotInfo),
+    });
+
+    if (res.ok) {
+        const newSpot = await res.json();
+        dispatch(createSpotAC(newSpot));
+        return newSpot;
+    }
+
 }
 
 export const getSpotThunk = (spotId) => async (dispatch) => {
@@ -51,6 +75,12 @@ const spotReducer = (state = initialState, action) => {
         }
         case GET_SPOT: {
             console.log("get spot case");
+            newState = { ...state };
+            newState.singleSpot = action.payload;
+            return newState;
+        }
+        case CREATE_SPOT: {
+            console.log('create spot case');
             newState = { ...state };
             newState.singleSpot = action.payload;
             return newState;

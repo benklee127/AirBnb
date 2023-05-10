@@ -8,6 +8,7 @@ function AllSpotsItem({ spot }) {
 
     return (
         <li>
+
             <img src={spot.previewImage} />
             <h2>{spot.city}</h2>
             <h2>{spot.state}</h2>
