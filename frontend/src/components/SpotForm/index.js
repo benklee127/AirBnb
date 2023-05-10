@@ -21,11 +21,25 @@ function SpotForm({ spot }) {
     const history = useHistory();
 
     const handleSubmit = async (e) => {
+
+        let createdSpot = {
+            ...spot,
+            address: address,
+            city: city,
+            state: state,
+            country: country,
+            lat: 1,
+            lng: 1,
+            name: name,
+            description: description,
+            price: price,
+        }
+        console.log("spotinfo recieved from user on submit", createdSpot);
         e.preventDefault();
-
-        const newSpot = await dispatch(createSpotThunk(spot));
-
-        history.push(`/reports/${spot.id}`);
+        console.log('submit attempt');
+        const newSpot = await dispatch(createSpotThunk(createdSpot));
+        console.log('newspot', newSpot);
+        history.push(`/spots/${newSpot.id}`);
     }
 
     return (

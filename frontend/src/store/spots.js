@@ -3,7 +3,17 @@ import { csrfFetch } from "./csrf";
 
 const GET_ALLSPOTS = "spots/getAllSpots";
 const GET_SPOT = "spots/getSpot";
-const CREATE_SPOT = "createSpot";
+const CREATE_SPOT = "spots/createSpot";
+const DELETE_SPOT = "spots/deleteSpot";
+const GET_USER_SPOTS = "spots/current";
+
+//ac for user spots
+const getUserSpotsAC = (spots) => {
+    return {
+        type: GET_USER_SPOTS,
+        payload: spots
+    }
+}
 
 //action creator for AllSpots
 const getAllSpotsAC = (spots) => {
@@ -28,20 +38,58 @@ const createSpotAC = (spot) => {
     }
 }
 
+const deleteSpotAC = (spot) => {
+    return {
+        type: DELETE_SPOT,
+        payload: spot
+    }
+}
+
+export const getUserSpotsThunk = () => async (dispatch) => {
+    console.log('reached get user spots');
+    const res = await csrfFetch('/api/spots/current');
+
+    if (res.ok) {
+        const userSpots = await res.json();
+        console.log('res from cur  user spots', userSpots);
+        const userSpotsObj = {};
+        userSpots.Spots.forEach(spot => userSpotsObj[spot.id] = spot);
+        console.log('res after userspotobj', userSpotsObj);
+        dispatch(getUserSpotsAC(userSpotsObj));
+    } else {
+        //err
+    }
+}
+
 export const createSpotThunk = (createSpotInfo) => async (dispatch) => {
-    const { newSpotInfo, newSpotImages } = createSpotInfo;
+
+    console.log("create spot info inside thunk: ", createSpotInfo);
     const res = await csrfFetch('/api/spots', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newSpotInfo),
+        body: JSON.stringify(createSpotInfo),
     });
-
     if (res.ok) {
         const newSpot = await res.json();
         dispatch(createSpotAC(newSpot));
         return newSpot;
     }
+}
 
+export const deleteSpotThunk = (spotId) => async (dispatch) => {
+    console.log('deletespot thunk id:', spotId);
+    const res = await fetch(`/api/spots/${spotId}`, { method: "DELETE" });
+
+    if (res.ok) {
+        dispatch(deleteSpotAC(spotId));
+    } else {
+        //error handling
+    }
+}
+
+export const updateSpotThunk = (updateSpotInfo) => async (dispatch) => {
+    console.log('update spot info thunk', updateSpotInfo);
+    const res = await csrfFetch('/api/spots/')
 }
 
 export const getSpotThunk = (spotId) => async (dispatch) => {
@@ -83,6 +131,19 @@ const spotReducer = (state = initialState, action) => {
             console.log('create spot case');
             newState = { ...state };
             newState.singleSpot = action.payload;
+            return newState;
+        }
+        case DELETE_SPOT: {
+            console.log('delete spot case');
+            console.log('action: ', action);
+            newState = { ...state };
+            delete newState.allSpots[action.payload];
+            return newState;
+        }
+        case GET_USER_SPOTS: {
+            console.log('get user spots/manage case');
+            newState = { ...state };
+            newState.allSpots = action.payload;
             return newState;
         }
         default:
