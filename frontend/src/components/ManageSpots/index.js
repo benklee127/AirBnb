@@ -21,6 +21,7 @@ function ManageSpots() {
                 {userSpots.map((spot) => (
                     <div>
                         <AllSpotsItem spot={spot} />
+                        <button>Edit</button>
                         <OpenModalButton
                             buttonText="Delete"
                             modalComponent={<DeleteSpot spot={spot} />}
