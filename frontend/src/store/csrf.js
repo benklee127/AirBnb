@@ -1,6 +1,8 @@
 import Cookies from 'js-cookie';
 
 export async function csrfFetch(url, options = {}) {
+    console.log('csrf url', url);
+    console.log('csrf options', options);
     // set options.method to 'GET' if there is no method
     // console.log('called xsrf 2');
     options.method = options.method || 'GET';

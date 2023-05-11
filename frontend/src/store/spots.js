@@ -64,11 +64,13 @@ export const getUserSpotsThunk = () => async (dispatch) => {
 export const createSpotThunk = (createSpotInfo) => async (dispatch) => {
 
     console.log("create spot info inside thunk: ", createSpotInfo);
-    const res = await csrfFetch('/api/spots', {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(createSpotInfo),
-    });
+    const res = await csrfFetch('/api/spots',
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(createSpotInfo),
+        }
+    );
     if (res.ok) {
         const newSpot = await res.json();
         dispatch(createSpotAC(newSpot));
@@ -78,8 +80,12 @@ export const createSpotThunk = (createSpotInfo) => async (dispatch) => {
 
 export const deleteSpotThunk = (spotId) => async (dispatch) => {
     console.log('deletespot thunk id:', spotId);
-    const res = await fetch(`/api/spots/${spotId}`, { method: "DELETE" });
-
+    const res = await csrfFetch(`/api/spots/${spotId}`,
+        {
+            method: "DELETE",
+            headers: { 'Content-Type': 'application/json' }
+        }
+    );
     if (res.ok) {
         dispatch(deleteSpotAC(spotId));
     } else {
@@ -89,7 +95,13 @@ export const deleteSpotThunk = (spotId) => async (dispatch) => {
 
 export const updateSpotThunk = (updateSpotInfo) => async (dispatch) => {
     console.log('update spot info thunk', updateSpotInfo);
-    const res = await csrfFetch('/api/spots/')
+    const res = await csrfFetch(`/api/spots/${updateSpotInfo.id}`,
+        {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updateSpotInfo)
+        }
+    )
 }
 
 export const getSpotThunk = (spotId) => async (dispatch) => {
@@ -136,7 +148,7 @@ const spotReducer = (state = initialState, action) => {
         case DELETE_SPOT: {
             console.log('delete spot case');
             console.log('action: ', action);
-            newState = { ...state };
+            newState = { ...state, allSpots: { ...state.allSpots } };
             delete newState.allSpots[action.payload];
             return newState;
         }
