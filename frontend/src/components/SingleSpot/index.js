@@ -31,17 +31,20 @@ function SingleSpot() {
     // console.log("spotimages", spot.SpotImages.length);
     return (
         <section>
-            <h1>hi from single spot page</h1>
+            {/* <h1>hi from single spot page</h1> */}
+            {spotImageUrls.map(url => (
+                <img src={url} className="preview-img"></img>
+            ))}
             <h2>{spot.name}</h2>
             <h2>{spot.city}, {spot.state}, {spot.country}</h2>
             <h3>{spot.description}</h3>
             <h2>{spot.price}</h2>
-            <h2>images</h2>
-            <ul>
+            {/* <h2>images</h2> */}
+            {/* <ul>
                 {spotImageUrls.map(url => (
                     <li>{url}</li>
                 ))}
-            </ul>
+            </ul> */}
             <h2>reviews</h2>
 
         </section>

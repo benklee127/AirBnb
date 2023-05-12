@@ -17,7 +17,6 @@ function App() {
 
   return (
     <>
-      <i class="fa-solid fa-tree">Tree & B</i>
       <Navigation isLoaded={isLoaded} />
       {isLoaded &&
         <Switch>

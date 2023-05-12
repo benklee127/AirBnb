@@ -43,8 +43,8 @@ function SpotForm({ spot }) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Create a Spot</h2>
+        <form onSubmit={handleSubmit} className='spot-form'>
+            <h2 className='form-title'>Create a Spot</h2>
             <label>
                 Name:
                 <input
@@ -85,7 +85,7 @@ function SpotForm({ spot }) {
                     onChange={(e) => setCountry(e.target.value)}
                 />
             </label>
-            <label>
+            {/* <label>
                 lat:
                 <input
                     type="text"
@@ -100,7 +100,7 @@ function SpotForm({ spot }) {
                     value={lng}
                     onChange={(e) => setLng(e.target.value)}
                 />
-            </label>
+            </label> */}
             <label>
                 description:
                 <input
@@ -117,7 +117,7 @@ function SpotForm({ spot }) {
                     onChange={(e) => setPrice(e.target.value)}
                 />
             </label>
-            <button type="submit">Submit</button>
+            <button type="submit" className='form-submit'>Submit</button>
         </form>
     )
 }

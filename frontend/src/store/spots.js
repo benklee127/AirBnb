@@ -6,6 +6,7 @@ const GET_SPOT = "spots/getSpot";
 const CREATE_SPOT = "spots/createSpot";
 const DELETE_SPOT = "spots/deleteSpot";
 const GET_USER_SPOTS = "spots/current";
+const UPDATE_SPOT = "spots/update";
 
 //ac for user spots
 const getUserSpotsAC = (spots) => {
@@ -45,16 +46,24 @@ const deleteSpotAC = (spot) => {
     }
 }
 
+const updateSpotAc = (spot) => {
+    return {
+        type: UPDATE_SPOT,
+        payload: spot
+    }
+}
+
 export const getUserSpotsThunk = () => async (dispatch) => {
     console.log('reached get user spots');
     const res = await csrfFetch('/api/spots/current');
 
     if (res.ok) {
         const userSpots = await res.json();
-        console.log('res from cur  user spots', userSpots);
+        // console.log('res from cur  user spots', userSpots);
         const userSpotsObj = {};
         userSpots.Spots.forEach(spot => userSpotsObj[spot.id] = spot);
-        console.log('res after userspotobj', userSpotsObj);
+        // console.log('res after userspotobj', userSpotsObj);
+
         dispatch(getUserSpotsAC(userSpotsObj));
     } else {
         //err
@@ -73,6 +82,7 @@ export const createSpotThunk = (createSpotInfo) => async (dispatch) => {
     );
     if (res.ok) {
         const newSpot = await res.json();
+        
         dispatch(createSpotAC(newSpot));
         return newSpot;
     }
@@ -89,7 +99,7 @@ export const deleteSpotThunk = (spotId) => async (dispatch) => {
     if (res.ok) {
         dispatch(deleteSpotAC(spotId));
     } else {
-        //error handling
+        //err
     }
 }
 
@@ -102,6 +112,11 @@ export const updateSpotThunk = (updateSpotInfo) => async (dispatch) => {
             body: JSON.stringify(updateSpotInfo)
         }
     )
+    if (res.ok) {
+        dispatch(updateSpotAc(updateSpotInfo))
+    } else {
+
+    }
 }
 
 export const getSpotThunk = (spotId) => async (dispatch) => {
@@ -156,6 +171,12 @@ const spotReducer = (state = initialState, action) => {
             console.log('get user spots/manage case');
             newState = { ...state };
             newState.allSpots = action.payload;
+            return newState;
+        }
+        case UPDATE_SPOT: {
+            console.log('update spot case');
+            newState = { ...state };
+            newState.singleSpot = action.payload;
             return newState;
         }
         default:

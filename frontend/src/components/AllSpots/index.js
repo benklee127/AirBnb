@@ -16,12 +16,12 @@ function AllSpots() {
     }, [dispatch]);
 
     return (
-        <section>
+        <div className="all-spots">
             {allSpots.map((spot) => (
                 <AllSpotsItem spot={spot} />
             ))}
 
-        </section>
+        </div>
     )
 }
 

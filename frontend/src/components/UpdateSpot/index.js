@@ -3,7 +3,7 @@ import { updateSpotThunk } from "../../store/spots";
 import { useModal } from "../../context/Modal";
 
 
-const UpdateSpotForm = () => {
+const UpdateSpotForm = (spotInfo) => {
     const spot = {
         name: "",
         address: "",
