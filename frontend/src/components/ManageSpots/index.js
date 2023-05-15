@@ -4,6 +4,7 @@ import { getUserSpotsThunk } from "../../store/spots";
 import AllSpotsItem from "../AllSpotsItem";
 import DeleteSpot from "../DeleteSpotModal";
 import OpenModalButton from "../OpenModalButton";
+import { NavLink } from "react-router-dom";
 
 function ManageSpots() {
     const dispatch = useDispatch();
@@ -21,7 +22,7 @@ function ManageSpots() {
                 {userSpots.map((spot) => (
                     <div>
                         <AllSpotsItem spot={spot} />
-                        <button>Edit</button>
+                        <button className="update-button"><NavLink exact to={`/spots/${spot.id}/update`}>Edit</NavLink></button>
                         <OpenModalButton
                             buttonText="Delete"
                             modalComponent={<DeleteSpot spot={spot} />}

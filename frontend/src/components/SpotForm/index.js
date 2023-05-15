@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { createSpotThunk } from "../../store/spots";
+import { createSpotThunk, updateSpotThunk } from "../../store/spots";
 import "./SpotForm.css";
 
-function SpotForm({ spot }) {
+function SpotForm({ spot, type }) {
 
+    console.log(spot);
     const [name, setName] = useState(spot?.name);
     const [address, setAddress] = useState(spot?.address);
     const [city, setCity] = useState(spot?.city);
@@ -17,9 +18,14 @@ function SpotForm({ spot }) {
     const [description, setDescription] = useState(spot?.name);
     const [price, setPrice] = useState(spot?.price);
 
+    const [img1, setImg1] = useState("");
+    const [img2, setImg2] = useState("");
+    const [img3, setImg3] = useState("");
+
     const dispatch = useDispatch();
     const history = useHistory();
 
+    //handle form submission
     const handleSubmit = async (e) => {
 
         let createdSpot = {
@@ -34,12 +40,32 @@ function SpotForm({ spot }) {
             description: description,
             price: price,
         }
-        console.log("spotinfo recieved from user on submit", createdSpot);
-        e.preventDefault();
-        console.log('submit attempt');
-        const newSpot = await dispatch(createSpotThunk(createdSpot));
-        console.log('newspot', newSpot);
-        history.push(`/spots/${newSpot.id}`);
+
+        //add images
+        const spotImgs = [];
+
+        if (img1) spotImgs.push({ url: img1, preview: true });
+        if (img2) spotImgs.push({ url: img2, preview: false });
+        if (img3) spotImgs.push({ url: img3, preview: false });
+
+
+        //Split between new/update
+        if (type === 'new') {
+            console.log("spotinfo recieved from user on submit for new", createdSpot);
+            e.preventDefault();
+            console.log('submit attempt');
+            const newSpot = await dispatch(createSpotThunk(createdSpot));
+            console.log('newspot', newSpot);
+            history.push(`/spots/${newSpot.id}`);
+        } else {
+            e.preventDefault();
+            console.log('edited spot sumbit created  spot data', createdSpot);
+            const updatedSpot = await dispatch(updateSpotThunk(createdSpot));
+            console.log('updatedspot in form', updatedSpot);
+            history.push(`/spots/${createdSpot.id}`);
+        }
+
+
     }
 
     return (

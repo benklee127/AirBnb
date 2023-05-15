@@ -1,23 +1,16 @@
 import { useDispatch } from "react-redux";
 import { updateSpotThunk } from "../../store/spots";
 import { useModal } from "../../context/Modal";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useSelector } from "react-redux";
+import SpotForm from "../SpotForm";
 
-
-const UpdateSpotForm = (spotInfo) => {
-    const spot = {
-        name: "",
-        address: "",
-        city: "",
-        state: "",
-        country: "",
-        lat: "",
-        lng: "",
-        description: "",
-        price: "",
-    };
-
+const UpdateSpotForm = () => {
+    const { spotId } = useParams();
+    const spot = useSelector(state => state.spots.allSpots[spotId]);
+    console.log(spot);
     return (
-        <SpotForm spot={spot} />
+        <SpotForm spot={spot} type={'update'} />
     )
 }
 

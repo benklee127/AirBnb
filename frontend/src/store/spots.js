@@ -46,7 +46,7 @@ const deleteSpotAC = (spot) => {
     }
 }
 
-const updateSpotAc = (spot) => {
+const updateSpotAC = (spot) => {
     return {
         type: UPDATE_SPOT,
         payload: spot
@@ -82,7 +82,7 @@ export const createSpotThunk = (createSpotInfo) => async (dispatch) => {
     );
     if (res.ok) {
         const newSpot = await res.json();
-        
+
         dispatch(createSpotAC(newSpot));
         return newSpot;
     }
@@ -105,7 +105,9 @@ export const deleteSpotThunk = (spotId) => async (dispatch) => {
 
 export const updateSpotThunk = (updateSpotInfo) => async (dispatch) => {
     console.log('update spot info thunk', updateSpotInfo);
-    const res = await csrfFetch(`/api/spots/${updateSpotInfo.id}`,
+    console.log('updatespotid', updateSpotInfo.id);
+    const spotId = updateSpotInfo.id;
+    const res = await csrfFetch(`/api/spots/${spotId}`,
         {
             method: "PUT",
             headers: { 'Content-Type': 'application/json' },
@@ -113,7 +115,7 @@ export const updateSpotThunk = (updateSpotInfo) => async (dispatch) => {
         }
     )
     if (res.ok) {
-        dispatch(updateSpotAc(updateSpotInfo))
+        dispatch(updateSpotAC(updateSpotInfo))
     } else {
 
     }
@@ -144,19 +146,19 @@ const spotReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_ALLSPOTS: {
             console.log("get all spots case")
-            newState = { ...state }
+            newState = { ...state, allSpots: { ...state.allSpots } };
             newState.allSpots = action.payload;
             return newState;
         }
         case GET_SPOT: {
             console.log("get spot case");
-            newState = { ...state };
+            newState = { ...state, allSpots: { ...state.allSpots } };
             newState.singleSpot = action.payload;
             return newState;
         }
         case CREATE_SPOT: {
             console.log('create spot case');
-            newState = { ...state };
+            newState = { ...state, allSpots: { ...state.allSpots } };
             newState.singleSpot = action.payload;
             return newState;
         }
@@ -169,13 +171,13 @@ const spotReducer = (state = initialState, action) => {
         }
         case GET_USER_SPOTS: {
             console.log('get user spots/manage case');
-            newState = { ...state };
+            newState = { ...state, allSpots: { ...state.allSpots } };
             newState.allSpots = action.payload;
             return newState;
         }
         case UPDATE_SPOT: {
             console.log('update spot case');
-            newState = { ...state };
+            newState = { ...state, allSpots: { ...state.allSpots } };
             newState.singleSpot = action.payload;
             return newState;
         }
