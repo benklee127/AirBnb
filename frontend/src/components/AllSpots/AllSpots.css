@@ -1,7 +1,7 @@
 .all-spots {
     display: flex;
-    flex-wrap: wrap;
-    gap: 50px;
-    margin: 0 50px;
     justify-content: start;
+    gap: 5%;
+    flex-wrap: wrap;
+    margin: 20px 10%;
 }

@@ -4,14 +4,19 @@ import { getSpotThunk } from "../../store/spots";
 import './Spots.css';
 import { useParams } from "react-router-dom"
 import { getReviewsThunk } from "../../store/reviews";
+import Reviews from '../Reviews'
+import ReviewForm from '../ReviewForm'
+import OpenModalButton from "../OpenModalButton";
 
 function SingleSpot() {
+    const sessionUser = useSelector(state => state.session.user);
     const { spotId } = useParams();
     const spot = useSelector(state => state.spots.singleSpot);
     const reviews = useSelector(state => state.reviews.spot);
     console.log("hi from single spot", spot);
 
     const dispatch = useDispatch();
+
 
     useEffect(() => {
         console.log('single spot useeffect');
@@ -37,6 +42,7 @@ function SingleSpot() {
 
     let reviewList = Object.values(reviews);
     console.log('reviews list', reviewList);
+    console.log('session user', reviewList.find(review => review.userId === sessionUser.id));
 
 
     return (
@@ -45,10 +51,10 @@ function SingleSpot() {
             {spotImageUrls.map(url => (
                 <img src={url} className="preview-img"></img>
             ))}
-            <h2>{spot.name}</h2>
-            <h2>{spot.city}, {spot.state}, {spot.country}</h2>
-            <h3>{spot.description}</h3>
-            <h2>{spot.price}</h2>
+            <h2 className='spot-name'>{spot.name}</h2>
+            <h2 className='location'>{spot.city}, {spot.state}, {spot.country}</h2>
+            <h3 className='desc'>{spot.description}</h3>
+            <h2 className='price'>${spot.price} / night</h2>
             {/* <h2>images</h2> */}
             {/* <ul>
                 {spotImageUrls.map(url => (
@@ -56,10 +62,16 @@ function SingleSpot() {
                 ))}
             </ul> */}
             <h2>reviews</h2>
-            <div>{reviewList.map(review => (
+
+            <OpenModalButton
+                buttonText="Create review"
+                modalComponent={<ReviewForm spotId={spot.id}></ReviewForm>} />
+
+            {/* <div>{reviewList.map(review => (
                 <h3>{review.User.firstName}
                     {review.review}</h3>
-            ))}</div>
+            ))}</div> */}
+            <Reviews reviews={reviewList} />
 
 
         </section>

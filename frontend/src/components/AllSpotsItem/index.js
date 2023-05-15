@@ -17,11 +17,8 @@ function AllSpotsItem({ spot }) {
                 <img src={spot.previewImage} />
                 <div className="spot-info">
                     <div>
-                        <h2>{spot.city},{spot.state}</h2>
-                        <h2><i class="fa-solid fa-star"></i>{ratingDisplay}</h2>
-                    </div>
-                    <div>
-                        <h2>${priceDisplay} night</h2>
+                        <h3>{spot.city},{spot.state}<i class="fa-solid fa-star"></i>{ratingDisplay}</h3>
+                        <h3>${priceDisplay} / night</h3>
                     </div>
                 </div>
             </NavLink>
