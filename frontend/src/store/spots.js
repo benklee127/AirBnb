@@ -70,18 +70,25 @@ export const getUserSpotsThunk = () => async (dispatch) => {
     }
 }
 
-export const createSpotThunk = (createSpotInfo) => async (dispatch) => {
+export const createSpotThunk = ({ createdSpot, spotImgs }) => async (dispatch) => {
 
-    console.log("create spot info inside thunk: ", createSpotInfo);
+    console.log("create spot info inside thunk: ", createdSpot);
     const res = await csrfFetch('/api/spots',
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(createSpotInfo),
+            body: JSON.stringify(createdSpot),
         }
     );
     if (res.ok) {
         const newSpot = await res.json();
+        for (let i = 0; i < spotImgs.length; i++) {
+            await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(spotImgs[i]),
+            })
+        }
 
         dispatch(createSpotAC(newSpot));
         return newSpot;
@@ -103,19 +110,28 @@ export const deleteSpotThunk = (spotId) => async (dispatch) => {
     }
 }
 
-export const updateSpotThunk = (updateSpotInfo) => async (dispatch) => {
-    console.log('update spot info thunk', updateSpotInfo);
-    console.log('updatespotid', updateSpotInfo.id);
-    const spotId = updateSpotInfo.id;
+export const updateSpotThunk = ({ createdSpot, spotImgs }) => async (dispatch) => {
+    console.log('update spot info thunk', createdSpot);
+    console.log('updatespotid', createdSpot.id);
+    const spotId = createdSpot.id;
     const res = await csrfFetch(`/api/spots/${spotId}`,
         {
             method: "PUT",
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updateSpotInfo)
+            body: JSON.stringify(createdSpot)
         }
     )
     if (res.ok) {
-        dispatch(updateSpotAC(updateSpotInfo))
+        const spot = await res.json();
+        for (let i = 0; i < spotImgs.length; i++) {
+            await csrfFetch(`/api/spots/${spot.id}/images`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(spotImgs[i]),
+            })
+        }
+        dispatch(updateSpotAC(createdSpot))
+
     } else {
 
     }

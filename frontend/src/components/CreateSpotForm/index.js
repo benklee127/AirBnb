@@ -13,6 +13,10 @@ const CreateSpotForm = () => {
         price: "",
     };
 
+    const spotImgs = {
+        
+    }
+
     return (
         <SpotForm spot={spot} type={'new'} />
     )

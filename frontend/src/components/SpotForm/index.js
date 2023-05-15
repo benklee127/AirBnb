@@ -21,6 +21,7 @@ function SpotForm({ spot, type }) {
     const [img1, setImg1] = useState("");
     const [img2, setImg2] = useState("");
     const [img3, setImg3] = useState("");
+    const [img4, setImg4] = useState("");
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -47,6 +48,7 @@ function SpotForm({ spot, type }) {
         if (img1) spotImgs.push({ url: img1, preview: true });
         if (img2) spotImgs.push({ url: img2, preview: false });
         if (img3) spotImgs.push({ url: img3, preview: false });
+        if (img4) spotImgs.push({ url: img4, preview: false });
 
 
         //Split between new/update
@@ -54,14 +56,14 @@ function SpotForm({ spot, type }) {
             console.log("spotinfo recieved from user on submit for new", createdSpot);
             e.preventDefault();
             console.log('submit attempt');
-            const newSpot = await dispatch(createSpotThunk(createdSpot));
+            const newSpot = await dispatch(createSpotThunk({ createdSpot, spotImgs }));
             console.log('newspot', newSpot);
             history.push(`/spots/${newSpot.id}`);
         } else {
             e.preventDefault();
             console.log('edited spot sumbit created  spot data', createdSpot);
-            const updatedSpot = await dispatch(updateSpotThunk(createdSpot));
-            console.log('updatedspot in form', updatedSpot);
+            const updatedSpot = await dispatch(updateSpotThunk({ createdSpot, spotImgs }));
+            console.log('updatedspot in form', createdSpot);
             history.push(`/spots/${createdSpot.id}`);
         }
 
@@ -143,6 +145,39 @@ function SpotForm({ spot, type }) {
                     onChange={(e) => setPrice(e.target.value)}
                 />
             </label>
+            <label>
+                images
+                <input
+                    type="text"
+                    value={img1}
+                    onChange={(e) => setImg1(e.target.value)}
+                />
+            </label>
+            <label>
+                image2
+                <input
+                    type="text"
+                    value={img2}
+                    onChange={(e) => setImg2(e.target.value)}
+                />
+            </label>
+            <label>
+                image3
+                <input
+                    type="text"
+                    value={img3}
+                    onChange={(e) => setImg3(e.target.value)}
+                />
+            </label>
+            <label>
+                image4
+                <input
+                    type="text"
+                    value={img4}
+                    onChange={(e) => setImg4(e.target.value)}
+                />
+            </label>
+
             <button type="submit" className='form-submit'>Submit</button>
         </form>
     )
