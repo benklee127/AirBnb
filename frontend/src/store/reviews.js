@@ -26,7 +26,7 @@ const deleteReviewAC = (review) => {
 }
 
 export const deleteReviewThunk = (review) => async (dispatch) => {
-    const res = await csrfFetch(`/api/reviews/${review.id}`, {
+    const res = await csrfFetch(`/api/reviews/${review}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
     })

@@ -1,8 +1,24 @@
-.preview-img {
+.gallery {
     display: flex;
-    max-width: 300px;
-    gap: 5px;
-    flex-direction: column;
+    flex-direction: row;
 }
 
-.price {}
+.preview-img {
+    width: 50%;
+}
+
+.main-img {
+    display: flex;
+    max-width: 50%;
+}
+
+.spot-section {
+
+    border-bottom: 2px black;
+}
+
+
+.single-spot-info-box {
+    display: flex;
+    justify-content: space-between;
+}

@@ -6,13 +6,13 @@ import { useDispatch } from "react-redux";
 function DeleteReview({ review }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-
+    console.log('review in delete', review);
     const handleDelete = (e) => {
         e.preventDefault();
-        return dispatch(deleteReviewThunk(review.id))
+        return dispatch(deleteReviewThunk(review))
             .then(closeModal);
     }
-    console.log('delete review', review.id);
+    console.log('delete review', review);
 
     return (
         <>

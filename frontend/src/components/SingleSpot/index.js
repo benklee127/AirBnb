@@ -30,51 +30,67 @@ function SingleSpot() {
     // for (let i = 0; i < spot.SpotImages.length; i++) {
     //     spotImageUrls.push(spot.SpotImages[i].url);
     // }
-
+    console.log('spotimages', spot.SpotImages);
     for (let e in spot.SpotImages) {
         spotImageUrls.push(spot.SpotImages[e].url)
     }
-    console.log('array: spoturlimg:', spotImageUrls);
-    // console.log(spotImageUrls[0].url);
-    // // spot.SpotImages.forEach(e => spotImageUrls.push(e[].url));
-    // console.log("spotimages", spot.SpotImages.length);
-    console.log('review info in singlespot', reviews);
+    let mainImg = spotImageUrls[0];
+    // console.log('main img', mainImg);
+    // console.log('array: spoturlimg:', spotImageUrls);
+    // // console.log(spotImageUrls[0].url);
+    // // // spot.SpotImages.forEach(e => spotImageUrls.push(e[].url));
+    // // console.log("spotimages", spot.SpotImages.length);
+    // console.log('review info in singlespot', reviews);
 
     let reviewList = Object.values(reviews);
-    console.log('reviews list', reviewList);
-    console.log('session user', reviewList.find(review => review.userId === sessionUser.id));
-
+    // console.log('reviews list', reviewList);
+    // console.log('session user', reviewList.find(review => review.userId === sessionUser.id));
+    // console.log('session user', sessionUser.id);
+    // console.log('spot.Owner', spot.Owner && spot.Owner.firstName);
 
     return (
-        <section>
-            {/* <h1>hi from single spot page</h1> */}
-            {spotImageUrls.map(url => (
-                <img src={url} className="preview-img"></img>
-            ))}
-            <h2 className='spot-name'>{spot.name}</h2>
-            <h2 className='location'>{spot.city}, {spot.state}, {spot.country}</h2>
-            <h3 className='desc'>{spot.description}</h3>
-            <h2 className='price'>${spot.price} / night</h2>
-            {/* <h2>images</h2> */}
-            {/* <ul>
-                {spotImageUrls.map(url => (
-                    <li>{url}</li>
-                ))}
-            </ul> */}
-            <h2>reviews</h2>
+        <div>
+            <div className="spot-section">
+                < div className="gallery" >
+                    <img src={mainImg} className="main-img"></img>
+                    <div>{
+                        spotImageUrls.map(url => (
+                            <img src={url} className="preview-img"></img>
+                        ))
+                    }
+                    </div>
 
-            <OpenModalButton
-                buttonText="Create review"
-                modalComponent={<ReviewForm spotId={spot.id}></ReviewForm>} />
+                </div >
+                <div className="single-spot-info-box">
+                    <div className="name-desc-box">
+                        <h2>Hosted by firstName</h2>
 
-            {/* <div>{reviewList.map(review => (
+                        <h3 className='desc'>{spot.description}</h3>
+                    </div>
+                    <div>
+                        <h2 className='price'>${spot.price} / night</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div className='review-section'>
+                <div>
+                    {
+                        sessionUser && spot.Owner && sessionUser.id !== spot.Owner.id && !reviewList.find(review => review.userId === sessionUser.id) && <OpenModalButton
+                            buttonText="Create review"
+                            modalComponent={<ReviewForm spotId={spot.id}></ReviewForm>} />
+                    }
+
+                    {/* <div>{reviewList.map(review => (
                 <h3>{review.User.firstName}
                     {review.review}</h3>
             ))}</div> */}
-            <Reviews reviews={reviewList} />
+                    <Reviews reviews={reviewList} spot={spot} sessionUser={sessionUser} />
 
 
-        </section>
+                </div >
+            </div>
+        </div>
     )
 }
 
