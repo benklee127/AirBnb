@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { createSpotThunk, updateSpotThunk } from "../../store/spots";
 import "./SpotForm.css";
+import { useEffect } from "react";
 
 function SpotForm({ spot, type }) {
 
@@ -70,9 +71,10 @@ function SpotForm({ spot, type }) {
 
     }
 
+
     return (
         <form onSubmit={handleSubmit} className='spot-form'>
-            <h2 className='form-title'>Create a Spot</h2>
+            <h2 className='form-title'>Create a New Spot</h2>
             <label>
                 Name:
                 <input
@@ -178,7 +180,7 @@ function SpotForm({ spot, type }) {
                 />
             </label>
 
-            <button type="submit" className='form-submit'>Submit</button>
+            <button type="submit" className='form-submit'>Create Spot</button>
         </form>
     )
 }

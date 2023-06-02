@@ -15,7 +15,8 @@ function Reviews({ reviews, spot, sessionUser }) {
 
     useEffect(() => {
         dispatch(getReviewsThunk(spot.id))
-    }, [dispatch])
+    }, [dispatch
+    ])
     // if (reviewList.length <= 0) {
     //     return (<></>);
     // }

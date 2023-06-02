@@ -5,6 +5,7 @@ import AllSpotsItem from "../AllSpotsItem";
 import DeleteSpot from "../DeleteSpotModal";
 import OpenModalButton from "../OpenModalButton";
 import { NavLink } from "react-router-dom";
+import './ManageSpots.css'
 
 function ManageSpots() {
     const dispatch = useDispatch();
@@ -17,8 +18,8 @@ function ManageSpots() {
     console.log('users spots in component', userSpots);
     return (
         <div>
-            <h2> Manage Spots Page</h2>
-            <section>
+            <h2> Manage Spots</h2>
+            <section className='manage-spots-gallery'>
                 {userSpots.map((spot) => (
                     <div>
                         <AllSpotsItem spot={spot} />

@@ -64,7 +64,7 @@ export const getReviewsThunk = (spotId) => async (dispatch) => {
     }
 }
 
-const initialState = { spot: {}, user: {} };
+const initialState = { spot: {}, user: {}};
 
 const reviewReducer = (state = initialState, action) => {
     let newState;
@@ -82,8 +82,11 @@ const reviewReducer = (state = initialState, action) => {
             return newState;
         }
         case DELETE_REVIEW: {
-            newState = { ...state, spot: { ...state.spot }, user: {} };
+            console.log('state',state);
+            newState = { ...state };
+            console.log('state spot reviews', newState);
             delete newState.spot[action.payload.id]
+            console.log('state2', newState);
             return newState;
         }
         default:

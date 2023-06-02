@@ -2,6 +2,7 @@ import { deleteReviewThunk } from "../../store/reviews";
 import { getSpotThunk } from "../../store/spots";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 function DeleteReview({ review }) {
     const dispatch = useDispatch();
@@ -14,6 +15,7 @@ function DeleteReview({ review }) {
     }
     console.log('delete review', review);
 
+    
     return (
         <>
             <h1>Confirm Delete</h1>

@@ -5,11 +5,13 @@
 
 .preview-img {
     width: 50%;
+    object-fit: cover;
 }
 
 .main-img {
     display: flex;
     max-width: 50%;
+    object-fit: cover;
 }
 
 .spot-section {
