@@ -77,7 +77,7 @@ function SingleSpot() {
                 <div>
                     {
                         sessionUser && spot.Owner && sessionUser.id !== spot.Owner.id && !reviewList.find(review => review.userId === sessionUser.id) && <OpenModalButton
-                            buttonText="Create review"
+                            buttonText="Post Your Review"
                             modalComponent={<ReviewForm spotId={spot.id}></ReviewForm>} />
                     }
 

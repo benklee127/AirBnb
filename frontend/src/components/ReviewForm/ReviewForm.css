@@ -1,0 +1,12 @@
+.star-rating{
+    display: flex;
+    flex-direction: row;
+}
+
+.star-rating .filled {
+    color: saddlebrown;
+}
+
+.star-rating .empty {
+    color: burlywood;
+}
