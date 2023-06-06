@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { useState } from "react";
-import { createReviewThunk } from "../../store/reviews";
+import { createReviewThunk, getReviewsThunk } from "../../store/reviews";
 import './ReviewForm.css'
 import { startTransition } from "react";
 
@@ -21,7 +21,8 @@ function ReviewForm(spot) {
         }
         console.log('spot in review form', spot.spotId);
         let spotId = spot.spotId;
-        return dispatch(createReviewThunk({ spotId, review })).then(closeModal);
+
+        return dispatch(createReviewThunk({ spotId, review })).then(dispatch(getReviewsThunk(spotId))).then(closeModal);
 
     }
 
