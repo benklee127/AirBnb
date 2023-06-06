@@ -14,11 +14,11 @@ const CreateSpotForm = () => {
     };
 
     const spotImgs = {
-        
+
     }
 
     return (
-        <SpotForm spot={spot} type={'new'} />
+        <SpotForm spot={spot} type={'new'} className='spot-form-box' />
     )
 }
 

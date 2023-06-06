@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import OpenModalButton from "../OpenModalButton";
 import DeleteReview from "../DeleteReview";
+import { getSpotThunk } from "../../store/spots";
 
 function Reviews({ reviews, spot, sessionUser }) {
     // const sessionUser = useSelector(state => state.sessionUser);
@@ -35,7 +36,9 @@ function Reviews({ reviews, spot, sessionUser }) {
             <h2>
 
             </h2>
-            {reviewList.length == 0 && <>Be the first to post a review</>}
+            <h2>
+                {(reviewList.length == 0 && <>Be the first to post a review</>) || (`avg rating ${spot.avgStarRating.toFixed(1)}`)}
+            </h2>
             {reviewList.length > 0 && reviewList.map(review => {
                 const revMonth = monthNames[parseInt(review.createdAt.substring(5,7))];
                 const revYear = review.createdAt.substring(0,4);
@@ -44,7 +47,7 @@ function Reviews({ reviews, spot, sessionUser }) {
                 <div>
                     {/* {console.log('printing review', review)} */}
                     <h3>{review.User && review.User.firstName}</h3>
-                    <h4>{}</h4>
+                    <h4>{review.stars}</h4>
                     <h4>{review.review}</h4>
                     {/* <h4>{review.createdAt}</h4> */}
                     <h4>{revMonth} {revYear}</h4>
@@ -53,7 +56,7 @@ function Reviews({ reviews, spot, sessionUser }) {
 
                     {sessionUser && sessionUser.id == review.userId && < OpenModalButton
                         buttonText="Delete"
-                        modalComponent={<DeleteReview review={review.id} />}
+                        modalComponent={<DeleteReview review={review} />}
                     />}
                 </div>
                 )

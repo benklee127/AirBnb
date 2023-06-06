@@ -1,4 +1,6 @@
 import { csrfFetch } from "./csrf";
+import { useDispatch } from "react-redux";
+import { getSpotThunk } from "./spots";
 
 const GET_REVIEWS = "reviews/getReviews";
 const CREATE_REVIEW = "reviews/createReview";
@@ -26,13 +28,14 @@ const deleteReviewAC = (review) => {
 }
 
 export const deleteReviewThunk = (review) => async (dispatch) => {
-    const res = await csrfFetch(`/api/reviews/${review}`, {
+    const res = await csrfFetch(`/api/reviews/${review.id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
     })
 
     if (res.ok) {
-        dispatch(deleteReviewAC(review))
+        dispatch(deleteReviewAC(review.id))
+        dispatch(getSpotThunk(review.spotId))
     }
 
 }
@@ -48,6 +51,7 @@ export const createReviewThunk = ({ spotId, review }) => async (dispatch) => {
     if (res.ok) {
         const reviewObj = await res.json();
         dispatch(createReviewAC(reviewObj))
+        dispatch(getSpotThunk(spotId))
         return reviewObj;
     }
 }
@@ -70,26 +74,27 @@ const reviewReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case GET_REVIEWS: {
-            newState = { ...state, spot: {}, user: {} };
+            newState = { ...state, spot: {...state.spot}, user: {...state.user} };
             console.log('get reviews case', action.payload);
             action.payload.forEach(review => newState.spot[review.id] = review)
             console.log('new state after reviews', newState);
             return newState;
         }
         case CREATE_REVIEW: {
-            newState = { ...state, spot: { ...state.spot }, user: {} };
+            newState = { ...state, spot: { ...state.spot }, user: {...state.user} };
             console.log('state', newState);
             console.log('action obj', action);
-            newState.spot[action.payload] = action.payload;
+            newState.spot[action.payload.id] = action.payload;
             console.log('state2',newState);
             return newState;
         }
         case DELETE_REVIEW: {
             // console.log('state',state);
-            newState = { ...state, spot: {...state.spot} };
-            // console.log('state spot reviews', newState);
+            newState = { ...state, spot: {...state.spot}, user:{...state.user} };
+            console.log('state spot reviews', newState);
+            console.log('action obj in delete', action.payload);
             delete newState.spot[action.payload]
-            // console.log('state2', newState);
+            console.log('state2', newState);
             return newState;
         }
         default:

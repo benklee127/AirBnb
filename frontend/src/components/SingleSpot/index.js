@@ -13,6 +13,8 @@ function SingleSpot() {
     const { spotId } = useParams();
     const spot = useSelector(state => state.spots.singleSpot);
     const reviews = useSelector(state => state.reviews.spot);
+    const state = useSelector(state => state);
+    console.log('state in singlespot',state);
     console.log("hi from single spot", spot);
 
     const dispatch = useDispatch();
@@ -22,7 +24,7 @@ function SingleSpot() {
         console.log('single spot useeffect');
         dispatch(getSpotThunk(spotId));
         dispatch(getReviewsThunk(spotId));
-    }, [dispatch]);
+    }, dispatch, reviews);
 
     let spotImageUrls = [];
 
@@ -47,7 +49,7 @@ function SingleSpot() {
     // console.log('session user', reviewList.find(review => review.userId === sessionUser.id));
     // console.log('session user', sessionUser.id);
     // console.log('spot.Owner', spot.Owner && spot.Owner.firstName);
-
+    let avgRating = spot.avgStarRating
     return (
         <div>
             <div className="spot-section">
@@ -64,11 +66,12 @@ function SingleSpot() {
                 <div className="single-spot-info-box">
                     <div className="name-desc-box">
                         <h2>Hosted by firstName</h2>
-
+                        {console.log('spot', spot)}
                         <h3 className='desc'>{spot.description}</h3>
                     </div>
                     <div>
                         <h2 className='price'>${spot.price} / night</h2>
+                        <h2 className='rating'><i className="fa-solid fa-star"></i>{spot.avgStarRating && spot.avgStarRating.toFixed(1)}</h2>
                     </div>
                 </div>
             </div>

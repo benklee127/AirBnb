@@ -4,9 +4,9 @@
 }
 
 .star-rating .filled {
-    color: saddlebrown;
+    color: burlywood;
 }
 
 .star-rating .empty {
-    color: burlywood;
+    color: whitesmoke;
 }
