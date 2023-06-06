@@ -22,6 +22,7 @@ function SpotForm({ spot, type }) {
   const [img2, setImg2] = useState("");
   const [img3, setImg3] = useState("");
   const [img4, setImg4] = useState("");
+  const [img5, setImg5] = useState("");
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -48,6 +49,7 @@ function SpotForm({ spot, type }) {
     if (img2) spotImgs.push({ url: img2, preview: false });
     if (img3) spotImgs.push({ url: img3, preview: false });
     if (img4) spotImgs.push({ url: img4, preview: false });
+    if (img5) spotImgs.push({ url: img5, preview: false });
 
     //Split between new/update
     if (type === "new") {
@@ -75,14 +77,6 @@ function SpotForm({ spot, type }) {
       <div className="boundary"></div>
       <form onSubmit={handleSubmit} className="spot-form">
         <h2 className="form-title">Create a new Spot</h2>
-        {/* <label className='form-label'>
-                Country: <br/>
-                <input className='form-input'
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-            </label> */}
         <label className="form-label">
           Country: <br />
           <input
@@ -90,6 +84,7 @@ function SpotForm({ spot, type }) {
             type="text"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
+            placeholder="Country"
           />
         </label>
         <label className="form-label">
@@ -99,6 +94,7 @@ function SpotForm({ spot, type }) {
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+            placeholder="Address"
           />
         </label>
         <div className="row">
@@ -109,6 +105,7 @@ function SpotForm({ spot, type }) {
               type="text"
               value={city}
               onChange={(e) => setCity(e.target.value)}
+              placeholder="City"
             />
           </label>
           <label className="form-label">
@@ -118,6 +115,7 @@ function SpotForm({ spot, type }) {
               type="text"
               value={state}
               onChange={(e) => setState(e.target.value)}
+              placeholder="State"
             />
           </label>
         </div>
@@ -137,55 +135,97 @@ function SpotForm({ spot, type }) {
                     onChange={(e) => setLng(e.target.value)}
                 />
             </label> */}
-        <label className="form-input">
-          description:
-          <input
-            type="text"
+        <div className="divider" />
+        <label className="form-label">
+          <h3>Describe your place to guests</h3>
+          <p>
+            Mention the best features of your space, any special amenities like
+            fast wifi or parking, and what you love about the neighborhood.
+          </p>
+          <textarea
+            className="form-input"
+            type="textarea"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            placeholder="Please write at least 30 characters"
           />
         </label>
-        <label className="form-input">
-          price:
+        <label className="form-label">
+          <h3>Create a title for your spot</h3>
+          <p>
+            Catch guests' attention with a spot title that highlights what makes
+            your space special.
+          </p>
           <input
+            className="form-input"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </label>
+        <label className="form-label">
+          <h3>Set a base price for your spot</h3>
+          <p>
+            Competitive pricing can help your listing stand out and rank higher
+            in search results.
+          </p>
+          <input
+            className="form-input"
             type="text"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
         </label>
-        <label className="form-input">
-          images
+
+        <label className="form-label">
+          <h3>Liven up your spot with photos</h3>
+          <p>Submit a link to at least one photo to publish your spot.</p>
           <input
+            className="form-input"
             type="text"
             value={img1}
             onChange={(e) => setImg1(e.target.value)}
+            placeholder="Preview Image URL"
           />
-        </label>
-        <label className="form-input">
-          image2
+          <br />
+          <br />
           <input
+            className="form-input"
             type="text"
             value={img2}
             onChange={(e) => setImg2(e.target.value)}
+            placeholder="Image URL"
           />
-        </label>
-        <label className="form-input">
-          image3
+          <br />
+          <br />
           <input
+            className="form-input"
             type="text"
             value={img3}
             onChange={(e) => setImg3(e.target.value)}
+            placeholder="Image URL"
           />
-        </label>
-        <label className="form-input">
-          image4
+          <br />
+          <br />
           <input
+            className="form-input"
             type="text"
             value={img4}
             onChange={(e) => setImg4(e.target.value)}
+            placeholder="Image URL"
+          />
+          <br />
+          <br />
+          <input
+            className="form-input"
+            type="text"
+            value={img5}
+            onChange={(e) => setImg5(e.target.value)}
+            placeholder="Image URL"
           />
         </label>
-
+        <br />
+        <br />
         <button type="submit" className="form-submit">
           Create Spot
         </button>
