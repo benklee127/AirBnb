@@ -59,7 +59,7 @@
   .review-modal button {
     padding: 4px;
     margin: 4px;
-    background-color: salmon;
+    background-color: darkseagreen;
     color: white;
     border: none;
     cursor: pointer;
@@ -70,5 +70,5 @@
 
 
   .review-modal button:hover {
-    background-color: maroon;
+    background-color: 	olivedrab;
   }

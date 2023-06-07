@@ -35,7 +35,7 @@
 .form-submit {
     width: 100%;
     align-items: center;
-    background-color: salmon;
+    background-color: darkseagreen;
     color: white;
     border: none;
     cursor: pointer;
@@ -43,7 +43,7 @@
     box-shadow: 2px 2px 2px grey;
 }
 .form-submit:hover {
-    background-color: maroon;
+    background-color: 	olivedrab;
 }
 
 .form-submit:disabled {

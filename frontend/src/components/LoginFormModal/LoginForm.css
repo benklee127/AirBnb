@@ -34,7 +34,7 @@
 .login-modal button {
     padding: 4px;
     margin: 4px;
-    background-color: salmon;
+    background-color: darkseagreen;
     color: white;
     border: none;
     cursor: pointer;
@@ -43,7 +43,7 @@
 }
 
 .login-modal button:hover {
-    background-color: maroon;
+    background-color: 	olivedrab;
   }
 
 .login-form button:disabled {
