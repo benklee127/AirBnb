@@ -5,7 +5,7 @@
 .nav {
     display: flex;
     justify-content: space-between;
-    border-bottom: solid grey;
+    border-bottom: solid lightgrey;
     padding-top: 20px;
     padding-bottom: 20px;
     border-width: 120%;
@@ -17,10 +17,12 @@
     color: darkseagreen;
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .home-logo {
     color: darkseagreen;
+    font-size: xxx-large;
 }
 .home-title {
     color: darkseagreen;
@@ -30,4 +32,23 @@
     display: flex;
     flex-direction: row;
     margin: 5px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.create-spot {
+    margin-right: 100px;
+}
+
+.profile-menu-wrapper {
+    z-index: 500;
+    right: 2px;
+    position: absolute;
+    background-color: white;
+    border-radius: 1px solid;
+    /* border-radius: 10px; */
+}
+
+.profile-menu {
+    border-radius: 10px;
 }

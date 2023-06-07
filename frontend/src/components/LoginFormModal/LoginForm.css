@@ -13,13 +13,11 @@
     flex-direction: column;
     margin-left: 10%;
     margin-right: 10%;
-
 }
 
 .login-modal h1{
     display: flex;
     justify-content: center;
-    color: black
 }
 
 .login-form input {

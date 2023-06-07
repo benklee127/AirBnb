@@ -52,7 +52,7 @@ function SingleSpot() {
   // console.log('session user', reviewList.find(review => review.userId === sessionUser.id));
   // console.log('session user', sessionUser.id);
   // console.log('spot.Owner', spot.Owner && spot.Owner.firstName);
-  let avgRating = spot.avgStarRating;
+  let ratingDisplay = spot.avgStarRating ? spot.avgStarRating.toFixed(1) : " new";
   return (
     <div>
       <div className="spot-section">
@@ -74,7 +74,7 @@ function SingleSpot() {
             <h2 className="price">${spot.price} / night</h2>
             <h2 className="rating">
               <i className="fa-solid fa-star"></i>
-              {spot.avgStarRating ? spot.avgStarRating.toFixed(1) : "new"}
+              {ratingDisplay}
             </h2>
           </div>
         </div>

@@ -13,7 +13,7 @@ function Navigation({ isLoaded }) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <div>
+      <div className="right-nav">
         <NavLink
           exact
           to="/spots/new"

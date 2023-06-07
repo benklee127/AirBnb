@@ -35,8 +35,9 @@ function ProfileButton({ user }) {
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
-    <div>
-      <button onClick={openMenu}>
+    <div className="profile-menu-wrapper">
+      <button onClick={openMenu} className="profile-menu">
+        <i className="fa-solid fa-bars" />
         <i className="fas fa-user-circle" />
       </button>
       <div className={ulClassName} ref={ulRef}>

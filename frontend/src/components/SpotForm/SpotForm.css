@@ -1,10 +1,14 @@
 .spot-form {
-    width: 30%;
-    display: flex;
-    padding-left: 20px;
-    flex-direction: column;
-    align-items: left;
-    align-self: center;
+
+
+        width: 50%;
+        display: flex;
+        /* padding-left: 20px; */
+        align-items: left;
+        /* align-self: center; */
+        /* align-content: center; */
+        justify-content: center;
+        flex-direction: column;
 }
 
 .form-wrapper {
@@ -12,6 +16,7 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
 
 /* .boundary {
     height: 1px;
