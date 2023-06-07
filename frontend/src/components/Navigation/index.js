@@ -8,48 +8,61 @@ import "./Navigation.css";
 import SignupFormModal from "../SignupFormModal";
 
 function Navigation({ isLoaded }) {
-    const sessionUser = useSelector((state) => state.session.user);
+  const sessionUser = useSelector((state) => state.session.user);
 
-    let sessionLinks;
-    if (sessionUser) {
-        sessionLinks = (
-            <li>
-                <ProfileButton user={sessionUser} />
-                <div>
-                    <NavLink exact to="/spots/current">
-                        Manage Spots
-                    </NavLink>
-                </div>
-                <NavLink exact to="/spots/new">
-                    Create Spot
-                </NavLink>
-            </li>
-        );
-    } else {
-        sessionLinks = (
-            <li className="right-nav">
-                <OpenModalButton
-                    buttonText="Log In"
-                    modalComponent={<LoginFormModal />}
-                />
-                <OpenModalButton
-                    buttonText="Sign Up"
-                    modalComponent={<SignupFormModal />}
-                />
-            </li>
-        );
-    }
-
-    return (
-        <ul className="nav">
-            <ul className="left-nav">
-                <NavLink exact to="/">
-                    <i class="fa-solid fa-tree">Tree & B</i>
-                </NavLink>
-            </ul>
-            {isLoaded && sessionLinks}
-        </ul>
+  let sessionLinks;
+  if (sessionUser) {
+    sessionLinks = (
+      <div>
+        <NavLink
+          exact
+          to="/spots/new"
+          style={{ textDecoration: "none" }}
+          className="create-spot"
+        >
+          Create a New Spot
+        </NavLink>
+        <ProfileButton user={sessionUser} className="profile-button" />
+      </div>
     );
+  } else {
+    sessionLinks = (
+      <div className="right-nav">
+        <OpenModalButton
+          buttonText="Log In"
+          modalComponent={<LoginFormModal />}
+        />
+        <OpenModalButton
+          buttonText="Sign Up"
+          modalComponent={<SignupFormModal />}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="nav">
+      <div className="left-nav">
+        <NavLink
+          exact
+          to="/"
+          className="home-logo"
+          style={{ textDecoration: "none" }}
+        >
+          <i class="fa-solid fa-tree"></i>
+        </NavLink>
+        <NavLink
+          exact
+          to="/"
+          className="home-title"
+          style={{ textDecoration: "none" }}
+        >
+          <div>Tree BnB</div>
+        </NavLink>
+      </div>
+      {isLoaded && sessionLinks}
+    </div>
+  );
 }
 
 export default Navigation;

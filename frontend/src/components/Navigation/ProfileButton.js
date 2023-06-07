@@ -1,53 +1,59 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from 'react-redux';
-import * as sessionActions from '../../store/session';
+import { useDispatch } from "react-redux";
+import * as sessionActions from "../../store/session";
+import { NavLink } from "react-router-dom";
 
 function ProfileButton({ user }) {
-    const dispatch = useDispatch();
-    const [showMenu, setShowMenu] = useState(false);
-    const ulRef = useRef();
+  const dispatch = useDispatch();
+  const [showMenu, setShowMenu] = useState(false);
+  const ulRef = useRef();
 
-    const openMenu = () => {
-        if (showMenu) return;
-        setShowMenu(true);
+  const openMenu = () => {
+    if (showMenu) return;
+    setShowMenu(true);
+  };
+
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = (e) => {
+      if (!ulRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
     };
 
-    useEffect(() => {
-        if (!showMenu) return;
+    document.addEventListener("click", closeMenu);
 
-        const closeMenu = (e) => {
-            if (!ulRef.current.contains(e.target)) {
-                setShowMenu(false);
-            }
-        };
+    return () => document.removeEventListener("click", closeMenu);
+  }, [showMenu]);
 
-        document.addEventListener('click', closeMenu);
+  const logout = (e) => {
+    e.preventDefault();
+    dispatch(sessionActions.logout());
+  };
 
-        return () => document.removeEventListener("click", closeMenu);
-    }, [showMenu]);
+  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
-    const logout = (e) => {
-        e.preventDefault();
-        dispatch(sessionActions.logout());
-    };
-
-    const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
-
-    return (
-        <>
-            <button onClick={openMenu}>
-                <i className="fas fa-user-circle" />
-            </button>
-            <div className={ulClassName} ref={ulRef}>
-                <div>Hello, {user.firstName}</div>
-                <div>{user.username}</div>
-                <div>{user.email}</div>
-                <h3>
-                    <button onClick={logout}>Log Out</button>
-                </h3>
-            </div>
-        </>
-    );
+  return (
+    <div>
+      <button onClick={openMenu}>
+        <i className="fas fa-user-circle" />
+      </button>
+      <div className={ulClassName} ref={ulRef}>
+        <div>Hello, {user.firstName}</div>
+        <div>{user.username}</div>
+        <div>{user.email}</div>
+        <div>
+          <NavLink exact to="/spots/current">
+            Manage Spots
+          </NavLink>
+        </div>
+        <h3>
+          <button onClick={logout}>Log Out</button>
+        </h3>
+      </div>
+    </div>
+  );
 }
 
 export default ProfileButton;

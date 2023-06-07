@@ -5,17 +5,29 @@
 .nav {
     display: flex;
     justify-content: space-between;
-    border-bottom: solid darkseagreen;
+    border-bottom: solid grey;
     padding-top: 20px;
     padding-bottom: 20px;
     border-width: 120%;
 }
 
 .left-nav {
+    margin-left: 20px;
     font-size: xx-large;
     color: darkseagreen;
+    display: flex;
+    flex-direction: row;
+}
+
+.home-logo {
+    color: salmon;
+}
+.home-title {
+    color: salmon;
 }
 
 .right-nav {
-    color: darkseagreen;
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
 }

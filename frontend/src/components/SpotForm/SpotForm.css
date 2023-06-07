@@ -1,9 +1,7 @@
 .spot-form {
     width: 30%;
-    margin: 8px ;
     display: flex;
     padding-left: 20px;
-    box-sizing: border-box;
     flex-direction: column;
     align-items: left;
     align-self: center;
@@ -15,9 +13,10 @@
     justify-content: space-between;
 }
 
-.boundary {
-    width: 10%;
-}
+/* .boundary {
+    height: 1px;
+    border:  black;
+} */
 
 .row {
     width: 100%;
@@ -34,5 +33,21 @@
 }
 
 .form-submit {
-    width: 30%;
+    width: 100%;
+    align-items: center;
+    background-color: salmon;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border: 2px solid black;
+    box-shadow: 2px 2px 2px grey;
+}
+.form-submit:hover {
+    background-color: maroon;
+}
+
+.form-submit:disabled {
+    border-color:  grey;
+    color: grey;
+    background-color: white;
 }
