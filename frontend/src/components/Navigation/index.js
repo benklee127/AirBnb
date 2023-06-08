@@ -57,7 +57,7 @@ function Navigation({ isLoaded }) {
           className="home-title"
           style={{ textDecoration: "none" }}
         >
-          <div>Tree BnB</div>
+          <div>treebnb</div>
         </NavLink>
       </div>
       {isLoaded && sessionLinks}

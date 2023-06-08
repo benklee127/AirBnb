@@ -12,7 +12,7 @@
 }
 
 .left-nav {
-    margin-left: 20px;
+    margin-left: 5%;
     font-size: xx-large;
     color: darkseagreen;
     display: flex;
@@ -31,9 +31,9 @@
 .right-nav {
     display: flex;
     flex-direction: row;
-    margin: 5px;
-    margin-top: 10px;
-    border-radius: 10px;
+    margin-right: 5%;
+    align-items: flex-end;
+
 }
 
 .create-spot {
@@ -41,14 +41,56 @@
 }
 
 .profile-menu-wrapper {
-    z-index: 500;
     right: 2px;
+    font-size: larger;
     position: absolute;
     background-color: white;
+    margin-right: 5%;
     border-radius: 1px solid;
     /* border-radius: 10px; */
+
 }
+
+.profile-dropdown{
+    position: absolute;
+    font-size: 0.8em;
+    /* display: flex; */
+
+    margin-top: 4px;
+    padding: 10%;
+    height: 160px;
+    left: -65%;
+    width:120px;
+    border-radius: 5px;
+    border: solid 1px darkolivegreen;
+    background-color: white;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
 
 .profile-menu {
     border-radius: 10px;
+    width: 80px;
+    height: 40px;
+    font-size: larger;
 }
+
+.profile-menu-wrapper button {
+    padding: 4px;
+    margin: 4px;
+    background-color: darkseagreen;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border: 2px solid black;
+    box-shadow: 2px 2px 2px grey;
+    align-items: center;
+  }
+
+
+
+  .profile-menu-wrapper button:hover {
+    background-color: 	olivedrab;
+  }

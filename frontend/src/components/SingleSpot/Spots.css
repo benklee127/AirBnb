@@ -116,6 +116,7 @@
 }
 .rating-review {
     flex-direction: row;
+    font-size: small;
 }
 
 .single-spot-info-box {
