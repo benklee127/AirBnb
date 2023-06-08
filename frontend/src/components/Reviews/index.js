@@ -44,10 +44,7 @@ function Reviews({ reviews, spot, sessionUser }) {
   return (
     <div>
       <h2></h2>
-      <h2>
-        {(reviewList.length == 0 && <>Be the first to post a review</>) ||
-          `avg rating ${avgStarRating.toFixed(1)}`}
-      </h2>
+      <h2>{reviewList.length == 0 && <>Be the first to post a review</>}</h2>
       {reviewList.length > 0 &&
         reviewList.map((review) => {
           const revMonth =

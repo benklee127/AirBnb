@@ -75,7 +75,7 @@ const reviewReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case GET_REVIEWS: {
-      newState = { ...state, spot: {}, user: { ...state.user } };
+      newState = { ...state, spot: {}, user: {} };
       console.log("get reviews case", action.payload);
       action.payload.forEach((review) => (newState.spot[review.id] = review));
       console.log("new state after reviews", newState);

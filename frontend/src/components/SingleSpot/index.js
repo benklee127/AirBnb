@@ -7,6 +7,7 @@ import { getReviewsThunk } from "../../store/reviews";
 import Reviews from "../Reviews";
 import ReviewForm from "../ReviewForm";
 import OpenModalButton from "../OpenModalButton";
+import placeholderImg from "../../assets/tempimg.png";
 
 function SingleSpot() {
   const sessionUser = useSelector((state) => state.session.user);
@@ -40,6 +41,14 @@ function SingleSpot() {
     spotImageUrls.push(spot.SpotImages[e].url);
   }
   let mainImg = spotImageUrls[0];
+
+  let galleryImages = new Array(4).fill(placeholderImg);
+  console.log("galleryimage place", galleryImages);
+  for (let i = 1; i < 5; i++) {
+    if (spotImageUrls[i]) galleryImages[i - 1] = spotImageUrls[i];
+  }
+
+  console.log("galleryimages", galleryImages);
   // console.log('main img', mainImg);
   // console.log('array: spoturlimg:', spotImageUrls);
   // // console.log(spotImageUrls[0].url);
@@ -52,30 +61,48 @@ function SingleSpot() {
   // console.log('session user', reviewList.find(review => review.userId === sessionUser.id));
   // console.log('session user', sessionUser.id);
   // console.log('spot.Owner', spot.Owner && spot.Owner.firstName);
-  let ratingDisplay = spot.avgStarRating ? spot.avgStarRating.toFixed(1) : " new";
+  let ratingDisplay = spot.avgStarRating
+    ? spot.avgStarRating.toFixed(1)
+    : " new";
+
   return (
-    <div>
-      <div className="spot-section">
+    <div className="single-spot-wrapper">
+      <div className="spot-header">
+        <h1>{spot.name}</h1>
+        <p>
+          {spot.city}, {spot.state}, {spot.country}
+        </p>
+      </div>
+      <div className="spot-details">
         <div className="gallery">
           <img src={mainImg} className="main-img"></img>
-          <div>
-            {spotImageUrls.map((url) => (
-              <img src={url} className="preview-img"></img>
+          <div className="gallery-image-wrapper">
+            {galleryImages.map((url) => (
+              <img src={url} className="gallery-image"></img>
             ))}
           </div>
         </div>
         <div className="single-spot-info-box">
           <div className="name-desc-box">
-            <h2>Hosted by firstName</h2>
-            {console.log("spot", spot)}
-            <h3 className="desc">{spot.description}</h3>
-          </div>
-          <div>
-            <h2 className="price">${spot.price} / night</h2>
-            <h2 className="rating">
-              <i className="fa-solid fa-star"></i>
-              {ratingDisplay}
+            <h2>
+              Hosted by {spot.Owner ? spot.Owner.firstName : "firstName"}
+              {spot.Owner ? " " + spot.Owner.lastName : " lastName"}
             </h2>
+            {console.log("spot in spot details", spot)}
+            <p className="desc">{spot.description}</p>
+          </div>
+          <div className="callout-wrapper">
+            <div className="callout-row1">
+              <h2 className="price">${spot.price} night</h2>
+              <h3>
+                <i className="fa-solid fa-star"></i> {ratingDisplay}
+              </h3>
+              <h3>
+                {" "}
+                {reviewList.length} review{reviewList.length > 1 ? "s" : ""}
+              </h3>
+            </div>
+            <button>Reserve</button>
           </div>
         </div>
       </div>
