@@ -41,17 +41,19 @@ function ProfileButton({ user }) {
         <i className="fa-solid fa-bars" /> <i className="fas fa-user-circle" />
       </button>
       <div className={ulClassName} ref={ulRef}>
-        <div>Hello, {user.firstName}</div>
-        <div>{user.username}</div>
-        <div>{user.email}</div>
-        <div>
-          <NavLink exact to="/spots/current">
-            Manage Spots
-          </NavLink>
+        <div className="menu-wrap">
+          <div>Hello, {user.firstName}</div>
+          <div>{user.username}</div>
+          <div>{user.email}</div>
+          <div>
+            <NavLink exact to="/spots/current" >
+              Manage Spots
+            </NavLink>
+          </div>
+          <h3>
+            <button onClick={logout}>Log Out</button>
+          </h3>
         </div>
-        <h3>
-          <button onClick={logout}>Log Out</button>
-        </h3>
       </div>
     </div>
   );

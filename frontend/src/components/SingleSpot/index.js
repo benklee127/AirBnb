@@ -102,7 +102,9 @@ function SingleSpot() {
                 {reviewList.length} review{reviewList.length > 1 ? "s" : ""}
               </h3>
             </div>
-            <button>Reserve</button>
+            <button onClick={() => alert("Feature coming soon.")}>
+              Reserve
+            </button>
           </div>
         </div>
       </div>

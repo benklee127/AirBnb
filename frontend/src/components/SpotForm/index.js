@@ -17,6 +17,7 @@ function SpotForm({ spot, type }) {
   const [lng, setLng] = useState(spot?.lng);
   const [description, setDescription] = useState(spot?.name);
   const [price, setPrice] = useState(spot?.price);
+  const [err, setErr] = useState({});
 
   const [img1, setImg1] = useState("");
   const [img2, setImg2] = useState("");
@@ -27,8 +28,54 @@ function SpotForm({ spot, type }) {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  //valdiations
+  useEffect(() => {
+    console.log("validation use effect called");
+    const err = {};
+    if (name.length < 1) err.name = "Name is required";
+    if (address.length < 1) err.address = "Address is required";
+    if (city.length < 1) err.city = "City is required";
+    if (country.length < 1) err.country = "Country is required";
+    if (state.length < 1) err.state = "State is required";
+    if (description.length < 30)
+      err.description = "Description must be at least 30 characters";
+    if (isNaN(price)) err.price = "Price must be a number";
+    if (price.length < 1) err.price = "Price is required";
+    setErr(err);
+  }, [
+    name,
+    address,
+    city,
+    country,
+    state,
+    description,
+    price,
+    img1,
+    img2,
+    img3,
+    img4,
+    img5,
+  ]);
+
   //handle form submission
   const handleSubmit = async (e) => {
+    // console.log("validation use effect called");
+    // const err = {};
+    // if (name.length < 1) err.name = "Name is required";
+    // if (address.length < 1) err.address = "Address is required";
+    // if (city.length < 1) err.city = "City is required";
+    // if (country.length < 1) err.country = "Country is required";
+    // if (state.length < 1) err.state = "State is required";
+    // if (description.length < 30)
+    //   err.description = "Description must be at least 30 characters";
+    // if (isNaN(price)) err.price = "Price must be a number";
+    // if (price.length < 1) err.price = "Price is required";
+    // setErr(err);
+
+    // if(Object.keys(err).length > 0) {
+
+    // }
+
     let createdSpot = {
       ...spot,
       address: address,
@@ -58,7 +105,13 @@ function SpotForm({ spot, type }) {
       console.log("submit attempt");
       const newSpot = await dispatch(
         createSpotThunk({ createdSpot, spotImgs })
-      );
+      ).catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErr(data.errors);
+        }
+        console.log("errors", err);
+      });
       console.log("newspot", newSpot);
       history.push(`/spots/${newSpot.id}`);
     } else {
@@ -86,6 +139,7 @@ function SpotForm({ spot, type }) {
             onChange={(e) => setCountry(e.target.value)}
             placeholder="Country"
           />
+          {err.country && <p>{err.country}</p>}
         </label>
         <label className="form-label">
           Street Address: <br />
@@ -226,7 +280,11 @@ function SpotForm({ spot, type }) {
         </label>
         <br />
         <br />
-        <button type="submit" className="form-submit">
+        <button
+          disabled={Object.keys(err).length >= 1}
+          type="submit"
+          className="form-submit"
+        >
           Create Spot
         </button>
       </form>
