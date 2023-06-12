@@ -238,9 +238,7 @@ function SpotForm({ spot, type, updateId }) {
               placeholder="Price per night (USD)"
             />
           </div>
-          {showError && err.price && (
-            <p className="err-msg">{"Price per night is required"}</p>
-          )}
+          {showError && err.price && <p className="err-msg">{err.price}</p>}
         </label>
         <br />
         <hr />

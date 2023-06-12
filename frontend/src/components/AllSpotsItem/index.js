@@ -22,10 +22,11 @@ function AllSpotsItem({ spot }) {
   }
 
   return (
-    <div className="spot-item">
+    <div title={spot.name} className="spot-item">
       <NavLink className="spot-item-link" exact to={`/spots/${spot.id}`}>
         {/* <h1>{spot.name}</h1> */}
         <img
+          alt={spot.name}
           src={
             spot.previewImage === "No preview image found"
               ? tempimg

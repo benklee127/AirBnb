@@ -26,7 +26,7 @@ function SingleSpot() {
       dispatch(getSpotThunk(spotId));
       dispatch(getReviewsThunk(spotId));
     },
-    dispatch
+    dispatch,
     // reviews
   );
 
