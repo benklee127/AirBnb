@@ -18,7 +18,7 @@ function DeleteSpot({ spot }) {
       <h1>Confirm Delete</h1>
       <h2>Are you sure you'd like to remove this spot from the listings?</h2>
       <button onClick={handleDelete}>Yes (Delete)</button>
-      <button onClick={closeModal}>No</button>
+      <button onClick={closeModal}>No (Keep Spot)</button>
     </div>
   );
 }
