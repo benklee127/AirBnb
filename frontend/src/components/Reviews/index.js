@@ -42,11 +42,23 @@ function Reviews({ reviews, spot, sessionUser }) {
   console.log("sessionuser", sessionUser);
   let avgStarRating = spot.avgStarRating ? spot.avgStarRating : 0;
 
+  let ratingDisplay = spot.avgStarRating
+    ? spot.avgStarRating.toFixed(1)
+    : " new";
+
   return (
     <div>
       <h2></h2>
+
       <h2>
-        {reviewList.length === 0 ? <>Be the first to post a review</> : ""}
+        {sessionUser &&
+        spot.Owner &&
+        sessionUser.id !== spot.Owner.id &&
+        reviewList.length === 0 ? (
+          <>Be the first to post a review!</>
+        ) : (
+          ""
+        )}
       </h2>
       {reviewList.length > 0 &&
         reviewList.map((review) => {

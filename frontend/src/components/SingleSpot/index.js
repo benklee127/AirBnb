@@ -63,7 +63,7 @@ function SingleSpot() {
   // console.log('spot.Owner', spot.Owner && spot.Owner.firstName);
   let ratingDisplay = spot.avgStarRating
     ? spot.avgStarRating.toFixed(1)
-    : " new";
+    : " New";
 
   return (
     <div className="single-spot-wrapper">
@@ -97,9 +97,14 @@ function SingleSpot() {
               <h3>
                 <i className="fa-solid fa-star"></i> {ratingDisplay}
               </h3>
+              <h3>{reviewList.length > 0 && "  ·  "}</h3>
               <h3>
-                {" "}
-                {reviewList.length} review{reviewList.length > 1 ? "s" : ""}
+                {reviewList.length > 0 &&
+                  "" +
+                    reviewList.length +
+                    " review" +
+                    (reviewList.length > 1 ? "s" : "")}
+                {/* {reviewList.length} review{reviewList.length > 1 ? "s" : ""} */}
               </h3>
             </div>
             <button onClick={() => alert("Feature coming soon.")}>
@@ -109,8 +114,23 @@ function SingleSpot() {
         </div>
       </div>
 
+      <hr></hr>
+
       <div className="review-section">
         <div>
+          <div className="review-summary">
+            <h3>
+              <i className="fa-solid fa-star"></i> {ratingDisplay}
+            </h3>
+            <h3>{reviewList.length > 0 && " · "}</h3>
+            <h3>
+              {reviewList.length > 0 &&
+                "" +
+                  reviewList.length +
+                  " review" +
+                  (reviewList.length > 1 ? "s" : "")}
+            </h3>
+          </div>
           {sessionUser &&
             spot.Owner &&
             sessionUser.id !== spot.Owner.id &&
