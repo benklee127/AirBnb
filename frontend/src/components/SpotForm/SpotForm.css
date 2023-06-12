@@ -2,6 +2,7 @@
 
 
         width: 50%;
+        max-width: 600px;
         display: flex;
         /* padding-left: 20px; */
         align-items: left;
@@ -55,4 +56,21 @@
     border-color:  grey;
     color: grey;
     background-color: white;
+}
+
+.form-wrapper textarea {
+    height: 80px;
+}
+
+.err-msg {
+    color: red;
+    font-size: medium;
+}
+
+.form-inline {
+    display:flex;
+}
+.price-icon {
+    width:18px;
+    margin-top: 2px;
 }

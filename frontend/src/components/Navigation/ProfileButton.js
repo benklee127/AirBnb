@@ -8,7 +8,7 @@ function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
-
+  console.log("user", user);
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
@@ -45,11 +45,13 @@ function ProfileButton({ user }) {
           <div>Hello, {user.firstName}</div>
           <div>{user.username}</div>
           <div>{user.email}</div>
-          <div>
-            <NavLink exact to="/spots/current" >
-              Manage Spots
-            </NavLink>
-          </div>
+          {
+            <div>
+              <NavLink exact to="/spots/current">
+                Manage Spots
+              </NavLink>
+            </div>
+          }
           <h3>
             <button onClick={logout}>Log Out</button>
           </h3>

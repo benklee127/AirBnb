@@ -49,7 +49,7 @@ function Navigation({ isLoaded }) {
           className="home-logo"
           style={{ textDecoration: "none" }}
         >
-          <i class="fa-solid fa-tree"></i>
+          <i className="fa-solid fa-tree"></i>
         </NavLink>
         <NavLink
           exact

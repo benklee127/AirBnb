@@ -26,8 +26,8 @@ function SingleSpot() {
       dispatch(getSpotThunk(spotId));
       dispatch(getReviewsThunk(spotId));
     },
-    dispatch,
-    reviews
+    dispatch
+    // reviews
   );
 
   let spotImageUrls = [];

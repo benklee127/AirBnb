@@ -6,13 +6,10 @@ import { useSelector } from "react-redux";
 import SpotForm from "../SpotForm";
 
 const UpdateSpotForm = () => {
-    const { spotId } = useParams();
-    const spot = useSelector(state => state.spots.allSpots[spotId]);
-    console.log(spot);
-    return (
-        <SpotForm spot={spot} type={'update'} />
-    )
-}
+  const { spotId } = useParams();
+  const spot = useSelector((state) => state.spots.allSpots[spotId]);
+  console.log(spot);
+  return <SpotForm spot={spot} type={"update"} updateId={spotId} />;
+};
 
 export default UpdateSpotForm;
- 
