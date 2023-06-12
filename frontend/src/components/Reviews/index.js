@@ -31,7 +31,7 @@ function Reviews({ reviews, spot, sessionUser }) {
 
   useEffect(() => {
     dispatch(getReviewsThunk(spot.id));
-  }, [dispatch]);
+  }, [dispatch, spot]);
   // if (reviewList.length <= 0) {
   //     return (<></>);
   // }
@@ -63,7 +63,7 @@ function Reviews({ reviews, spot, sessionUser }) {
       {reviewList.length > 0 &&
         reviewList.map((review) => {
           const revMonth =
-            monthNames[parseInt(review.createdAt.substring(5, 7))];
+            monthNames[parseInt(review.createdAt.substring(5, 7)) - 1];
           const revYear = review.createdAt.substring(0, 4);
           // console.log('review month & year', revMonth, revYear);
           return (

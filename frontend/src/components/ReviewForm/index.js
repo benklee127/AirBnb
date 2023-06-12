@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createReviewThunk, getReviewsThunk } from "../../store/reviews";
 import "./ReviewForm.css";
 import { startTransition } from "react";
+import { getSpotThunk } from "../../store/spots";
 
 function ReviewForm(spot) {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ function ReviewForm(spot) {
 
     return dispatch(createReviewThunk({ spotId, review }))
       .then(dispatch(getReviewsThunk(spotId)))
+      .then(dispatch(getSpotThunk(spotId)))
       .then(closeModal);
   };
 
