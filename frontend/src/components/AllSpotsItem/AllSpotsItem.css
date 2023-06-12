@@ -2,11 +2,11 @@
     display: flex;
     flex-direction: column;
 
-    width: 250px;
+    width: 400px;
 }
 
 .spot-item img {
-    height: 250px;
+    height: 400px;
     width: 100%;
     border-radius: 20px;
 }
