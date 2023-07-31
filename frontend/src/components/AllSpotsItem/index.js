@@ -25,14 +25,16 @@ function AllSpotsItem({ spot }) {
     <div title={spot.name} className="spot-item">
       <NavLink className="spot-item-link" exact to={`/spots/${spot.id}`}>
         {/* <h1>{spot.name}</h1> */}
-        <img
-          alt={spot.name}
-          src={
-            spot.previewImage === "No preview image found"
-              ? tempimg
-              : spot.previewImage
-          }
-        />
+        <div className="spot-item-img-wrapper">
+          <img
+            alt={spot.name}
+            src={
+              spot.previewImage === "No preview image found"
+                ? tempimg
+                : spot.previewImage
+            }
+          />
+        </div>
         {/* <img src={tempimg}></img> */}
         {/* {spot.previewImage} */}
         <div className="spot-info">
@@ -45,9 +47,9 @@ function AllSpotsItem({ spot }) {
               {ratingDisplay}
             </h3>
           </div>
-          <h4>
+          <div>
             <strong>${priceDisplay}</strong> night
-          </h4>
+          </div>
         </div>
       </NavLink>
     </div>

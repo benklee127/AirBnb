@@ -1,7 +1,10 @@
 .all-spots {
     display: flex;
     justify-content: space-between;
-    gap: 4%;
+    /* gap: 5px; */
     flex-wrap: wrap;
-    margin:50px 5%;
+    margin:25px;
+    /* background-color: green; */
+
+    /* overflow: hidden; */
 }

@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 let options = {};
-if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  // define your schema in options object
+if (process.env.NODE_ENV === "production") {
+  options.schema = process.env.SCHEMA; // define your schema in options object
 }
 
 /** @type {import('sequelize-cli').Migration} */
@@ -16,16 +16,32 @@ module.exports = {
      *   name: 'John Doe',
      *   isBetaMember: false
      * }], {});
-    */
-    options.tableName = 'Bookings';
-    return queryInterface.bulkInsert(options, [
-      {
-        spotId: 1,
-        userId: 1,
-        startDate: '2023-04-01',
-        endDate: '2023-04-02'
-      },
-    ], {});
+     */
+    options.tableName = "Bookings";
+    return queryInterface.bulkInsert(
+      options,
+      [
+        {
+          spotId: 3,
+          userId: 1,
+          startDate: new Date("2023-04-01"),
+          endDate: new Date("2023-04-01"),
+        },
+        {
+          spotId: 3,
+          userId: 1,
+          startDate: new Date("2023-05-01"),
+          endDate: new Date("2023-05-02"),
+        },
+        {
+          spotId: 3,
+          userId: 1,
+          startDate: new Date("2023-08-05"),
+          endDate: new Date("2023-08-05"),
+        },
+      ],
+      {}
+    );
   },
 
   async down(queryInterface, Sequelize) {
@@ -35,7 +51,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    options.tableName = 'Bookings';
+    options.tableName = "Bookings";
     return queryInterface.bulkDelete(options);
-  }
+  },
 };

@@ -26,7 +26,7 @@ function SingleSpot() {
       dispatch(getSpotThunk(spotId));
       dispatch(getReviewsThunk(spotId));
     },
-    dispatch,
+    dispatch
     // reviews
   );
 
@@ -92,20 +92,26 @@ function SingleSpot() {
             <p className="desc">{spot.description}</p>
           </div>
           <div className="callout-wrapper">
-            <div className="callout-row1">
-              <h2 className="price">${spot.price} night</h2>
-              <h3>
-                <i className="fa-solid fa-star"></i> {ratingDisplay}
-              </h3>
-              <h3>{reviewList.length > 0 && "  ·  "}</h3>
-              <h3>
-                {reviewList.length > 0 &&
-                  "" +
-                    reviewList.length +
-                    " review" +
-                    (reviewList.length > 1 ? "s" : "")}
-                {/* {reviewList.length} review{reviewList.length > 1 ? "s" : ""} */}
-              </h3>
+            <div className="callout-info">
+              <div className="callout-price">
+                <div className="callout-price-num">${spot.price}</div>
+                &nbsp;night
+              </div>
+              <div className="callout-rating-review">
+                <div className="callout-rating-num">
+                  <i className="fa-solid fa-star"></i> {ratingDisplay}
+                </div>
+                {reviewList.length > 0 && (
+                  <div className="callout-dot">&nbsp;·&nbsp;</div>
+                )}
+                <div>
+                  {reviewList.length > 0 &&
+                    "" +
+                      reviewList.length +
+                      " review" +
+                      (reviewList.length > 1 ? "s" : "")}
+                </div>
+              </div>
             </div>
             <button onClick={() => alert("Feature coming soon.")}>
               Reserve
@@ -114,39 +120,35 @@ function SingleSpot() {
         </div>
       </div>
 
-      <hr></hr>
-
       <div className="review-section">
-        <div>
-          <div className="review-summary">
-            <h3>
-              <i className="fa-solid fa-star"></i> {ratingDisplay}
-            </h3>
-            <h3>{reviewList.length > 0 && " · "}</h3>
-            <h3>
-              {reviewList.length > 0 &&
-                "" +
-                  reviewList.length +
-                  " review" +
-                  (reviewList.length > 1 ? "s" : "")}
-            </h3>
-          </div>
-          {sessionUser &&
-            spot.Owner &&
-            sessionUser.id !== spot.Owner.id &&
-            !reviewList.find((review) => review.userId === sessionUser.id) && (
-              <OpenModalButton
-                buttonText="Post Your Review"
-                modalComponent={<ReviewForm spotId={spot.id}></ReviewForm>}
-              />
-            )}
+        <div className="review-summary">
+          <h3>
+            <i className="fa-solid fa-star"></i> {ratingDisplay}
+          </h3>
+          <h3>{reviewList.length > 0 && " · "}</h3>
+          <h3>
+            {reviewList.length > 0 &&
+              "" +
+                reviewList.length +
+                " review" +
+                (reviewList.length > 1 ? "s" : "")}
+          </h3>
+        </div>
+        {sessionUser &&
+          spot.Owner &&
+          sessionUser.id !== spot.Owner.id &&
+          !reviewList.find((review) => review.userId === sessionUser.id) && (
+            <OpenModalButton
+              buttonText="Post Your Review"
+              modalComponent={<ReviewForm spotId={spot.id}></ReviewForm>}
+            />
+          )}
 
-          {/* <div>{reviewList.map(review => (
+        {/* <div>{reviewList.map(review => (
                 <h3>{review.User.firstName}
                     {review.review}</h3>
             ))}</div> */}
-          <Reviews reviews={reviewList} spot={spot} sessionUser={sessionUser} />
-        </div>
+        <Reviews reviews={reviewList} spot={spot} sessionUser={sessionUser} />
       </div>
     </div>
   );
