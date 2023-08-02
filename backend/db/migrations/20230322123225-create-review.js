@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 
 let options = {};
-options.tableName = 'Reviews';
+options.tableName = "Reviews";
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA; // define your schema in options object
 }
@@ -32,7 +32,7 @@ module.exports = {
         },
         review: {
           allowNull: false,
-          type: Sequelize.STRING,
+          type: Sequelize.TEXT,
         },
         stars: {
           type: Sequelize.INTEGER,

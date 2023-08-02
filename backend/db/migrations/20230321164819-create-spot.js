@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 
 let options = {};
-options.tableName = 'Spots';
+options.tableName = "Spots";
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA; // define your schema in options object
 }
@@ -55,7 +55,7 @@ module.exports = {
         },
         description: {
           allowNull: false,
-          type: Sequelize.STRING,
+          type: Sequelize.TEXT,
         },
         price: {
           allowNull: false,
