@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/benklee127/AirBnb/issues"
   },
-  "homepage": "https://github.com/benklee127/AirBnb#readme"
+  "homepage": "https://github.com/benklee127/AirBnb#readme",
+  "dependencies": {
+    "react-calendar": "^4.6.0"
+  }
 }

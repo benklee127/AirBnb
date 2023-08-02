@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSpotThunk } from "../../store/spots";
 import "./Spots.css";
@@ -12,6 +12,7 @@ import placeholderImg from "../../assets/tempimg.png";
 function SingleSpot() {
   const sessionUser = useSelector((state) => state.session.user);
   const { spotId } = useParams();
+  const { showBookingForm, setShowBookingForm } = useState(false);
   const spot = useSelector((state) => state.spots.singleSpot);
   const reviews = useSelector((state) => state.reviews.spot);
   const state = useSelector((state) => state);
@@ -25,10 +26,18 @@ function SingleSpot() {
       console.log("single spot useeffect");
       dispatch(getSpotThunk(spotId));
       dispatch(getReviewsThunk(spotId));
+
+      document.addEventListener("click", closeBookingForm);
     },
     dispatch
     // reviews
   );
+
+  const closeBookingForm = () => {
+    if (!showBookingForm) return;
+
+    setShowBookingForm(false);
+  };
 
   let spotImageUrls = [];
 
